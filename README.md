@@ -1,5 +1,4 @@
 # WalletMicroservice
-WalletMicroservice
 
 ## Акторы:
 
