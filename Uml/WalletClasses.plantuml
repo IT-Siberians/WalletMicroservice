@@ -18,40 +18,40 @@ class Wallet.Domain::Entities::Owner {
   + Owner(id: Guid, username: Name)
   + GetId(): Guid
   + GetUsername(): Name
-  + PutMoneyOnBalance(money: decimal): bool
-  + WithdrawMoneyFromBalance(money: decimal): bool
+  + PutMoneyOnBalance(money: Money): bool
+  + WithdrawMoneyFromBalance(money: Money): bool
   + GetBalance(): Money
-  + GetTransactionsHistory(): IEnumerable<Transaction>
+  + GetTransactionsHistory(): IEnumerable<Transfer>
   + GetFreezingsHistory(): IEnumerable<Freezing>
 }
 
 class Wallet.Domain::Entities::Bill {
   - _id: Guid
   - _owner: Owner
-  - _moneyAmount: Money
-  - _frozenMoneyAmount: Money
+  - _money: Money
+  - _frozenMoney: Money
   # Bill()
   + Bill(id: Guid, owner: Owner)
   + GetId(): Guid
-  + GetMoneyAmount(): Money
-  + GetFrozenMoneyAmount(): Money
-  + PutMoney(money: decimal): bool
-  + WithdrawMoney(money: decimal): bool
-  + ReserveMoney(money: decimal): bool
-  + RealeaseMoney(money: decimal): bool
+  + GetMoney(): Money
+  + GetFrozenMoney(): Money
+  + PutMoney(money: Money): bool
+  + WithdrawMoney(money: Money): bool
+  + ReserveMoney(money: Money): bool
+  + RealeaseMoney(money: Money): bool
 }
 
-class Wallet.Domain::Entities::Transaction {
+class Wallet.Domain::Entities::Transfer {
   - _id: Guid
   - _money: Money
   - _lot: Lot?
   - _sourceOwner: Owner?
   - _destinationOwner: Owner?
-  # Transaction()
-  + Transaction(id: Guid, money: Money, source: Owner, destination: Owner, lot: Lot)
-  + Transaction(id: Guid, money: Money, source: Owner?, destination: Owner?)
+  # Transfer()
+  + Transfer(id: Guid, money: Money, source: Owner, destination: Owner, lot: Lot)
+  + Transfer(id: Guid, money: Money, source: Owner?, destination: Owner?)
   + GetId(): Guid
-  + GetMoneyAmount(): Money
+  + GetMoney(): Money
   + GetLot(): Lot?
   + GetSourceOwner(): Owner?
   + GetDestinationOwner(): Owner?
@@ -60,13 +60,15 @@ class Wallet.Domain::Entities::Transaction {
 class Wallet.Domain::Entities::Freezing {
   - _id: Guid
   - _lot: Lot
+  - _isUnfreezing: bool
   - _money: Money
   - _owner: Owner
   # Freezing()
   + Freezing(id: Guid, money: Money, owner: Owner, lot: Lot)
   + GetId(): Guid
   + GetLot(): Lot
-  + GetMoneyAmount(): Money
+  + IsUnfreezing(): bool
+  + GetMoney(): Money
   + GetOwner(): Owner
 }
 
@@ -81,10 +83,16 @@ class Wallet.Domain::Entities::Lot {
   + GetDescription(): Name
 }
 
-class Wallet.Domain::Services::TradingSystem {
-  + ReserveMoney(money: Money, buyer: Owner, lot: Lot): bool
-  + RealeaseMoney(money: Money, buyer: Owner, lot: Lot): bool
-  + TransferMoney(money: Money, source: Owner?, destination: Owner?, lot: Lot): bool
+class Wallet.Domain::Services::TradingService {
+  + ReserveMoney(buyerId: Guid, money: Money, lotId: Guid): bool
+  + RealeaseMoney(buyerId: Guid, money: Money, lotId: Guid): bool
+  + TransferMoney(sourceOwnerId: Guid?, destinationOwnerId: Guid?, money: Money, lotId: Guid): bool
+}
+
+class Wallet.Domain::Services::OwnerService {
+  + GetBalance(ownerId: Guid): Money
+  + GetTransfersHistory(ownerId: Guid): IEnumerable<Transfer>
+  + GetFreezingsHistory(ownerId: Guid): IEnumerable<Freezing>
 }
 
 abstract class Wallet.Domain::ValueObjects::ValueObject<T> {
@@ -108,28 +116,33 @@ Wallet.Domain::ValueObjects::ValueObject <|-- Wallet.Domain::ValueObjects::Money
 Wallet.Domain::Entities::Owner o-- Wallet.Domain::ValueObjects::Name
 Wallet.Domain::Entities::Lot o-- Wallet.Domain::ValueObjects::Name
 
-Wallet.Domain::Entities::Transaction o-- Wallet.Domain::ValueObjects::Money
+Wallet.Domain::Entities::Transfer o-- Wallet.Domain::ValueObjects::Money
 Wallet.Domain::Entities::Freezing o-- Wallet.Domain::ValueObjects::Money
 Wallet.Domain::Entities::Bill o-- Wallet.Domain::ValueObjects::Money
 
-Wallet.Domain::Entities::Transaction o-- Wallet.Domain::Entities::Owner
+Wallet.Domain::Entities::Transfer o-- Wallet.Domain::Entities::Owner
 Wallet.Domain::Entities::Freezing o-- Wallet.Domain::Entities::Owner
 Wallet.Domain::Entities::Bill o-- Wallet.Domain::Entities::Owner
 
-Wallet.Domain::Entities::Transaction o-- Wallet.Domain::Entities::Lot
+Wallet.Domain::Entities::Transfer o-- Wallet.Domain::Entities::Lot
 Wallet.Domain::Entities::Freezing o-- Wallet.Domain::Entities::Lot
 
-Wallet.Domain::Entities::IEntity <|.. Wallet.Domain::Entities::Transaction
+Wallet.Domain::Entities::IEntity <|.. Wallet.Domain::Entities::Transfer
 Wallet.Domain::Entities::IEntity <|.. Wallet.Domain::Entities::Freezing
 Wallet.Domain::Entities::IEntity <|.. Wallet.Domain::Entities::Bill
 Wallet.Domain::Entities::IEntity <|.. Wallet.Domain::Entities::Owner
 Wallet.Domain::Entities::IEntity <|.. Wallet.Domain::Entities::Lot
 
-Wallet.Domain::ValueObjects::Money <.. Wallet.Domain::Services::TradingSystem
-Wallet.Domain::Entities::Owner <.. Wallet.Domain::Services::TradingSystem
-Wallet.Domain::Entities::Lot <.. Wallet.Domain::Services::TradingSystem
+Wallet.Domain::ValueObjects::Money <.. Wallet.Domain::Services::TradingService
+Wallet.Domain::Entities::Owner <.. Wallet.Domain::Services::TradingService
+Wallet.Domain::Entities::Lot <.. Wallet.Domain::Services::TradingService
 
-Wallet.Domain::Entities::Transaction <.. Wallet.Domain::Entities::Owner
+Wallet.Domain::Entities::Transfer <.. Wallet.Domain::Entities::Owner
 Wallet.Domain::Entities::Freezing <.. Wallet.Domain::Entities::Owner
+
+Wallet.Domain::ValueObjects::Money <.. Wallet.Domain::Services::OwnerService
+Wallet.Domain::Entities::Owner <.. Wallet.Domain::Services::OwnerService
+Wallet.Domain::Entities::Transfer <.. Wallet.Domain::Services::OwnerService
+Wallet.Domain::Entities::Freezing <.. Wallet.Domain::Services::OwnerService
 
 @enduml
