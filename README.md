@@ -1,4 +1,4 @@
-# WalletMicroservice
+# Auction.WalletMicroservice
 
 ## Акторы:
 
