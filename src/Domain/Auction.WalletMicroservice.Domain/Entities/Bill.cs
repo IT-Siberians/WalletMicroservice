@@ -1,6 +1,9 @@
 ﻿using Auction.Common.Domain.Entities;
 using Auction.Common.Domain.Exceptions;
 using Auction.Common.Domain.ValueObjects;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Auction.WalletMicroservice.Domain.Entities;
 

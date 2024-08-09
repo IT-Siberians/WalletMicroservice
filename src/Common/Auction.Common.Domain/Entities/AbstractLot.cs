@@ -1,10 +1,11 @@
 ﻿using Auction.Common.Domain.Exceptions;
 using Auction.Common.Domain.ValueObjects;
+using System;
 
 namespace Auction.Common.Domain.Entities;
 
 public abstract class AbstractLot<TKey> : IEntity<TKey>
-    where TKey : IEquatable<TKey>
+    where TKey : notnull, IEquatable<TKey>
 {
     public TKey Id { get; protected set; }
 

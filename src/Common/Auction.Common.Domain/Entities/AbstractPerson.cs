@@ -1,10 +1,11 @@
 ﻿using Auction.Common.Domain.Exceptions;
 using Auction.Common.Domain.ValueObjects;
+using System;
 
 namespace Auction.Common.Domain.Entities;
 
 public abstract class AbstractPerson<TKey> : IEntity<TKey>
-    where TKey : IEquatable<TKey>
+    where TKey : notnull, IEquatable<TKey>
 {
     public TKey Id { get; protected set; }
 
@@ -24,7 +25,7 @@ public abstract class AbstractPerson<TKey> : IEntity<TKey>
         Id = id;
     }
 
-    public void ChangeUsername(Name username)
+    public virtual void ChangeUsername(Name username)
     {
         _username = username ?? throw new ArgumentNullValueException(nameof(username));
     }

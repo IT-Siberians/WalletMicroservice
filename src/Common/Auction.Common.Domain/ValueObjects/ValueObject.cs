@@ -1,4 +1,5 @@
 ﻿using Auction.Common.Domain.Exceptions;
+using System;
 
 namespace Auction.Common.Domain.ValueObjects;
 
