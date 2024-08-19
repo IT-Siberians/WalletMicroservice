@@ -9,7 +9,7 @@ public class OwnerConfiguration : IEntityTypeConfiguration<Owner>
 {
     public void Configure(EntityTypeBuilder<Owner> builder)
     {
-        builder.Property<Name>("_username")
+        builder.Property(o => o.Username)
             .IsRequired()
             .HasMaxLength(Name.MaxLength)
             .HasConversion(
@@ -17,6 +17,6 @@ public class OwnerConfiguration : IEntityTypeConfiguration<Owner>
                 str => new Name(str)
             );
 
-        builder.HasOne<Bill>("_bill").WithOne("_owwner");
+        builder.HasOne(o => o.Bill).WithOne(b => b.Owner);
     }
 }

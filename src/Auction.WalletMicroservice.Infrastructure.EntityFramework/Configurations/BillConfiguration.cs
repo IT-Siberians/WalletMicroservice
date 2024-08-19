@@ -9,20 +9,21 @@ public class BillConfiguration : IEntityTypeConfiguration<Bill>
 {
     public void Configure(EntityTypeBuilder<Bill> builder)
     {
-        builder.Property<Money>("_money")
+        builder.Property(b => b.Money)
             .HasConversion(
                 money => money.Value,
                 number => new Money(number)
             );
-        builder.Property<Money>("_frozenMoney")
+        builder.Property(b => b.FrozenMoney)
             .HasConversion(
                 money => money.Value,
                 number => new Money(number)
             );
 
-        builder.HasOne<Owner>("_owwner").WithOne("_bill");
+        builder.HasOne(b => b.Owner).WithOne(o => o.Bill);
+
         builder.HasMany<Transfer>("_transfers").WithOne(t => t.FromBill);
         builder.HasMany<Transfer>("_transfers").WithOne(t => t.ToBill);
-        builder.HasMany<Freezing>("_freezings").WithOne("_bill");
+        builder.HasMany<Freezing>("_freezings").WithOne(f => f.Bill);
     }
 }

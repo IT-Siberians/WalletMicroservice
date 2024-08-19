@@ -9,22 +9,22 @@ namespace Auction.WalletMicroservice.Domain.Entities;
 
 public class Bill : IEntity<Guid>
 {
-    public Guid Id { get; protected set; }
-
-    private Owner? _owwner;
-    private Money? _money;
-    private Money? _frozenMoney;
-
     private ICollection<Transfer>? _transfers;
     private ICollection<Freezing>? _freezings;
 
-    public Owner Owner => _owwner ?? throw new FieldNullValueException(nameof(_owwner));
-    public Money Money => _money ?? throw new FieldNullValueException(nameof(_money));
-    public Money FrozenMoney => _frozenMoney ?? throw new FieldNullValueException(nameof(_frozenMoney));
+    public Guid Id { get; }
+    public Owner Owner { get; }
+
+    public Money Money { get; protected set; }
+    public Money FrozenMoney { get; protected set; }
     public Money FreeMoney => new Money(Money.Value - FrozenMoney.Value);
 
-    public IReadOnlyCollection<Transfer> Transfers => _transfers?.ToList() ?? throw new FieldNullValueException(nameof(_transfers));
-    public IReadOnlyCollection<Freezing> Freezings => _freezings?.ToList() ?? throw new FieldNullValueException(nameof(_freezings));
+    public IReadOnlyCollection<Transfer> Transfers => _transfers
+        ?.ToList()
+        ?? throw new FieldNullValueException(nameof(_transfers));
+    public IReadOnlyCollection<Freezing> Freezings => _freezings
+        ?.ToList()
+        ?? throw new FieldNullValueException(nameof(_freezings));
 
     protected Bill() { }
 
@@ -41,9 +41,9 @@ public class Bill : IEntity<Guid>
         ICollection<Transfer> transfers,
         ICollection<Freezing> freezings)
     {
-        _owwner = owner ?? throw new ArgumentNullValueException(nameof(owner));
-        _money = money ?? throw new ArgumentNullValueException(nameof(money));
-        _frozenMoney = frozenMoney ?? throw new ArgumentNullValueException(nameof(frozenMoney));
+        Owner = owner ?? throw new ArgumentNullValueException(nameof(owner));
+        Money = money ?? throw new ArgumentNullValueException(nameof(money));
+        FrozenMoney = frozenMoney ?? throw new ArgumentNullValueException(nameof(frozenMoney));
 
         _transfers = transfers ?? throw new ArgumentNullValueException(nameof(transfers));
         _freezings = freezings ?? throw new ArgumentNullValueException(nameof(freezings));
@@ -60,7 +60,7 @@ public class Bill : IEntity<Guid>
     {
         CheckMoney(money);
 
-        _money = new Money(Money.Value + money.Value);
+        Money = new Money(Money.Value + money.Value);
     }
 
     public bool WithdrawMoney(Money money)
@@ -72,7 +72,7 @@ public class Bill : IEntity<Guid>
             return false;
         }
 
-        _money = new Money(Money.Value - money.Value);
+        Money = new Money(Money.Value - money.Value);
 
         return true;
     }
@@ -86,8 +86,8 @@ public class Bill : IEntity<Guid>
             return false;
         }
 
-        _money = new Money(Money.Value - money.Value);
-        _frozenMoney = new Money(FrozenMoney.Value + money.Value);
+        Money = new Money(Money.Value - money.Value);
+        FrozenMoney = new Money(FrozenMoney.Value + money.Value);
 
         return true;
     }
@@ -101,8 +101,8 @@ public class Bill : IEntity<Guid>
             return false;
         }
 
-        _money = new Money(Money.Value + money.Value);
-        _frozenMoney = new Money(FrozenMoney.Value - money.Value);
+        Money = new Money(Money.Value + money.Value);
+        FrozenMoney = new Money(FrozenMoney.Value - money.Value);
 
         return true;
     }

@@ -9,13 +9,13 @@ public class TransferConfiguration : IEntityTypeConfiguration<Transfer>
 {
     public void Configure(EntityTypeBuilder<Transfer> builder)
     {
-        builder.Property<Money>("_money")
+        builder.Property(t => t.Money)
             .HasConversion(
                 money => money.Value,
                 number => new Money(number)
             );
 
-        builder.HasOne<Lot>("_lot").WithMany();
+        builder.HasOne(t => t.Lot).WithMany();
         builder.HasOne(t => t.FromBill).WithMany("_transfers");
         builder.HasOne(t => t.ToBill).WithMany("_transfers");
     }

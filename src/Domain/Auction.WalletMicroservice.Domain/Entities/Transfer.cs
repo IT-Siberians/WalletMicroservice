@@ -7,20 +7,17 @@ namespace Auction.WalletMicroservice.Domain.Entities;
 
 public class Transfer : IEntity<Guid>
 {
-    public Guid Id { get; protected set; }
-    public Bill? FromBill { get; protected set; }
-    public Bill? ToBill { get; protected set; }
-    public Lot? Lot { get; protected set; }
-
-    private Money? _money;
-
-    public Money Money => _money ?? throw new FieldNullValueException(nameof(_money));
+    public Guid Id { get; }
+    public Bill? FromBill { get; }
+    public Bill? ToBill { get; }
+    public Lot? Lot { get; }
+    public Money Money { get; }
 
     protected Transfer() { }
 
     public Transfer(Guid id, Money money, Bill fromBill, Bill toBill, Lot lot)
     {
-        _money = money ?? throw new ArgumentNullValueException(nameof(money));
+        Money = money ?? throw new ArgumentNullValueException(nameof(money));
         FromBill = fromBill ?? throw new ArgumentNullValueException(nameof(fromBill));
         ToBill = toBill ?? throw new ArgumentNullValueException(nameof(toBill));
         Lot = lot ?? throw new ArgumentNullValueException(nameof(lot));
@@ -30,7 +27,7 @@ public class Transfer : IEntity<Guid>
 
     public Transfer(Guid id, Money money, Bill? fromBill, Bill? toBill)
     {
-        _money = money ?? throw new ArgumentNullValueException(nameof(money));
+        Money = money ?? throw new ArgumentNullValueException(nameof(money));
 
         Id = id;
 

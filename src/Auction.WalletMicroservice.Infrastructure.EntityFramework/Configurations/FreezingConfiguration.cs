@@ -9,13 +9,13 @@ public class FreezingConfiguration : IEntityTypeConfiguration<Freezing>
 {
     public void Configure(EntityTypeBuilder<Freezing> builder)
     {
-        builder.Property<Money>("_money")
+        builder.Property(f => f.Money)
             .HasConversion(
                 money => money.Value,
                 number => new Money(number)
             );
 
-        builder.HasOne<Bill>("_bill").WithMany("_freezings");
-        builder.HasOne<Lot>("_lot").WithMany();
+        builder.HasOne(f => f.Lot).WithMany();
+        builder.HasOne(f => f.Bill).WithMany("_freezings");
     }
 }

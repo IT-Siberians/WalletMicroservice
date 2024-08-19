@@ -7,23 +7,16 @@ namespace Auction.Common.Domain.Entities;
 public abstract class AbstractLot<TKey> : IEntity<TKey>
     where TKey : notnull, IEquatable<TKey>
 {
-    public TKey Id { get; protected set; }
+    public TKey Id { get; }
+    public Name Title { get; protected set; }
+    public Text Description { get; protected set; }
 
-    protected Name? _title;
-    protected Text? _description;
-
-    public Name Title => _title ?? throw new FieldNullValueException(nameof(_title));
-    public Text Description => _description ?? throw new FieldNullValueException(nameof(_description));
-
-    protected AbstractLot(TKey id)
-    {
-        Id = id;
-    }
+    protected AbstractLot() { }
 
     protected AbstractLot(TKey id, Name title, Text description)
     {
-        _title = title ?? throw new ArgumentNullValueException(nameof(title));
-        _description = description ?? throw new ArgumentNullValueException(nameof(description));
+        Title = title ?? throw new ArgumentNullValueException(nameof(title));
+        Description = description ?? throw new ArgumentNullValueException(nameof(description));
 
         Id = id;
     }

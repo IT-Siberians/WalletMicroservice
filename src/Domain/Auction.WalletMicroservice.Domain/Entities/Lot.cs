@@ -6,7 +6,7 @@ namespace Auction.WalletMicroservice.Domain.Entities;
 
 public class Lot : AbstractLot<Guid>
 {
-    protected Lot() : base(Guid.Empty) { }
+    protected Lot() : base() { }
 
     public Lot(Guid id, Name title, Text description)
         : base(id, title, description)

@@ -7,16 +7,15 @@ namespace Auction.WalletMicroservice.Domain.Entities;
 
 public class Owner : AbstractPerson<Guid>
 {
-    private Bill? _bill;
+    public Bill Bill { get; }
 
-    public Bill Bill => _bill ?? throw new FieldNullValueException(nameof(_bill));
     public Money Balance => Bill.Money;
 
-    protected Owner() : base(Guid.Empty) { }
+    protected Owner() : base() { }
 
     public Owner(Guid id, Name username, Bill bill)
         : base(id, username)
     {
-        _bill = bill ?? throw new ArgumentNullValueException(nameof(bill));
+        Bill = bill ?? throw new ArgumentNullValueException(nameof(bill));
     }
 }
