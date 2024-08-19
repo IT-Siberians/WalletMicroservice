@@ -17,9 +17,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auction.Common.Domain", "Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auction.WalletMicroservice.Domain", "Domain\Auction.WalletMicroservice.Domain\Auction.WalletMicroservice.Domain.csproj", "{23A0EF60-0BD9-49E6-826C-B1771544617F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auction.Common.Infrastructure", "Common\Auction.Common.Infrastructure\Auction.Common.Infrastructure.csproj", "{76A07E01-B375-41C1-8CF0-702EFAC4F5CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auction.Common.Infrastructure", "Common\Auction.Common.Infrastructure\Auction.Common.Infrastructure.csproj", "{76A07E01-B375-41C1-8CF0-702EFAC4F5CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auction.WalletMicroservice.Infrastructure.RepositoriesImplementations", "Infrastructure\Auction.WalletMicroservice.Infrastructure.RepositoriesImplementations\Auction.WalletMicroservice.Infrastructure.RepositoriesImplementations.csproj", "{7E1DFD9F-703A-42D3-ABB0-9A97563F4167}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auction.WalletMicroservice.Infrastructure.RepositoriesImplementations", "Infrastructure\Auction.WalletMicroservice.Infrastructure.RepositoriesImplementations\Auction.WalletMicroservice.Infrastructure.RepositoriesImplementations.csproj", "{7E1DFD9F-703A-42D3-ABB0-9A97563F4167}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auction.WalletMicroservice.Infrastructure.EntityFramework", "Auction.WalletMicroservice.Infrastructure.EntityFramework\Auction.WalletMicroservice.Infrastructure.EntityFramework.csproj", "{885CC61A-FBA9-46D6-B43A-1903A9CE4AFF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,10 @@ Global
 		{7E1DFD9F-703A-42D3-ABB0-9A97563F4167}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E1DFD9F-703A-42D3-ABB0-9A97563F4167}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E1DFD9F-703A-42D3-ABB0-9A97563F4167}.Release|Any CPU.Build.0 = Release|Any CPU
+		{885CC61A-FBA9-46D6-B43A-1903A9CE4AFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{885CC61A-FBA9-46D6-B43A-1903A9CE4AFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{885CC61A-FBA9-46D6-B43A-1903A9CE4AFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{885CC61A-FBA9-46D6-B43A-1903A9CE4AFF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,6 +58,7 @@ Global
 		{23A0EF60-0BD9-49E6-826C-B1771544617F} = {B3C24DE5-6098-403B-9391-30CD662FCB6A}
 		{76A07E01-B375-41C1-8CF0-702EFAC4F5CA} = {481D73A4-2BE8-43BE-8660-20C9A7F93F45}
 		{7E1DFD9F-703A-42D3-ABB0-9A97563F4167} = {C7EA8E12-113A-4216-B4A2-43E2B4C01EDB}
+		{885CC61A-FBA9-46D6-B43A-1903A9CE4AFF} = {C7EA8E12-113A-4216-B4A2-43E2B4C01EDB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {64863294-4771-4C70-A6CB-C8908245E066}
