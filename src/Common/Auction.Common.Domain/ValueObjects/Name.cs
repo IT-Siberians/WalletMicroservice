@@ -2,6 +2,10 @@
 
 namespace Auction.Common.Domain.ValueObjects;
 
+/// <summary>
+/// Объект значения имени
+/// </summary>
+/// <param name="value">Значение имени</param>
 public class Name(string value)
     : ValueObject<string>(
         value,
