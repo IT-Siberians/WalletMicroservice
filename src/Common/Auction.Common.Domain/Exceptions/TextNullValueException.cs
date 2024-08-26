@@ -1,7 +1,9 @@
-﻿namespace Auction.Common.Domain.Exceptions;
+﻿using System;
+
+namespace Auction.Common.Domain.Exceptions;
 
 /// <summary>
 /// Доменное исключение для null-значения текста
 /// </summary>
 public class TextNullValueException()
-    : DomainValidationException("Text cannot be null");
+    : ArgumentNullException("Text cannot be null");

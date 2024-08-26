@@ -13,8 +13,10 @@ public class Name(string value)
         {
             if (value == null) throw new NameNullValueException();
             if (string.IsNullOrWhiteSpace(value)) throw new NameEmptyValueException(value);
-            if (value.Length > MaxLength) throw new NameLongValueException(value, MaxLength);
+            if (value.Length < MinLength
+                || value.Length > MaxLength) throw new NameLengthException(value, MinLength, MaxLength);
         })
 {
-    public const int MaxLength = 50;
+    public const int MinLength = 3;
+    public const int MaxLength = 30;
 }

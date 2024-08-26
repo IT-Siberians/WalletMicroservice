@@ -11,5 +11,5 @@ public class Money(decimal value)
         value,
         value =>
         {
-            if (value < 0) throw new MoneyValueException(value);
+            if (value < 0) throw new MoneyNegativeValueException(value);
         });

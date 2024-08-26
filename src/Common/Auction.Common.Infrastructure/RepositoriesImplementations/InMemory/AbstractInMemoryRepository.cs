@@ -1,5 +1,4 @@
 ﻿using Auction.Common.Domain.Entities;
-using Auction.Common.Domain.Exceptions;
 using Auction.Common.Domain.RepositoriesAbstractions;
 using System;
 using System.Collections.Generic;
@@ -24,12 +23,12 @@ public abstract class AbstractInMemoryRepository<TEntity, TKey>
     /// Конструктор базового репозитория, хранящего данные в памяти
     /// </summary>
     /// <param name="entities">Перечисление сущностей</param>
-    /// <exception cref="ArgumentNullValueException">Для null-значения</exception>
+    /// <exception cref="ArgumentNullException">Для null-значения</exception>
     protected AbstractInMemoryRepository(IEnumerable<TEntity> entities)
     {
         _entities = entities
             ?.ToList()
-            ?? throw new ArgumentNullValueException(nameof(entities));
+            ?? throw new ArgumentNullException(nameof(entities));
     }
 
     /// <summary>
@@ -53,15 +52,10 @@ public abstract class AbstractInMemoryRepository<TEntity, TKey>
     /// <param name="entity">Сущность</param>
     public virtual Task AddAsync(TEntity entity)
     {
-        CheckEntity(entity);
+        ArgumentNullException.ThrowIfNull(entity, nameof(entity));
 
         _entities.Add(entity);
         return Task.CompletedTask;
-    }
-
-    protected void CheckEntity(TEntity entity)
-    {
-        if (entity == null) throw new ArgumentNullException(nameof(entity));
     }
 
     /// <summary>
@@ -71,7 +65,7 @@ public abstract class AbstractInMemoryRepository<TEntity, TKey>
     /// <returns>true если сущность существует и ее удалось обновить, иначе false</returns>
     public virtual Task<bool> UpdateAsync(TEntity entity)
     {
-        CheckEntity(entity);
+        ArgumentNullException.ThrowIfNull(entity, nameof(entity));
 
         var existingEntity = _entities.FirstOrDefault(e => e.Id.Equals(entity.Id));
 
@@ -93,7 +87,7 @@ public abstract class AbstractInMemoryRepository<TEntity, TKey>
     /// <returns>true если сущность существует и ее удалось удалить, иначе false</returns>
     public virtual Task<bool> DeleteAsync(TEntity entity)
     {
-        CheckEntity(entity);
+        ArgumentNullException.ThrowIfNull(entity, nameof(entity));
 
         if (_entities.Remove(entity))
         {

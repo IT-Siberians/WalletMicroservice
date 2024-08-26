@@ -30,7 +30,7 @@ public class AbstractEfRepository<TDbContext, TEntity, TKey>
     /// <exception cref="ArgumentNullValueException">Для null-значения</exception>
     protected AbstractEfRepository(TDbContext dbContext)
     {
-        _dbContext = dbContext ?? throw new ArgumentNullValueException(nameof(dbContext));
+        _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
     }
 
     /// <summary>
@@ -54,15 +54,10 @@ public class AbstractEfRepository<TDbContext, TEntity, TKey>
     /// <param name="entity">Сущность</param>
     public virtual async Task AddAsync(TEntity entity)
     {
-        CheckEntity(entity);
+        ArgumentNullException.ThrowIfNull(entity, nameof(entity));
 
         _dbContext.Add(entity);
         await _dbContext.SaveChangesAsync();
-    }
-
-    protected void CheckEntity(TEntity entity)
-    {
-        if (entity == null) throw new ArgumentNullException(nameof(entity));
     }
 
     /// <summary>
@@ -72,7 +67,7 @@ public class AbstractEfRepository<TDbContext, TEntity, TKey>
     /// <returns>true если сущность существует и ее удалось обновить, иначе false</returns>
     public virtual async Task<bool> UpdateAsync(TEntity entity)
     {
-        CheckEntity(entity);
+        ArgumentNullException.ThrowIfNull(entity, nameof(entity));
 
         var existingEntity = await _dbContext
             .Set<TEntity>()
@@ -96,7 +91,7 @@ public class AbstractEfRepository<TDbContext, TEntity, TKey>
     /// <returns>true если сущность существует и ее удалось удалить, иначе false</returns>
     public virtual async Task<bool> DeleteAsync(TEntity entity)
     {
-        CheckEntity(entity);
+        ArgumentNullException.ThrowIfNull(entity, nameof(entity));
 
         var existingEntity = await _dbContext
             .Set<TEntity>()
