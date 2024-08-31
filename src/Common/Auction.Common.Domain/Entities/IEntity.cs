@@ -6,8 +6,8 @@ namespace Auction.Common.Domain.Entities;
 /// Базовый интерфейс сущности
 /// </summary>
 /// <typeparam name="TKey">Тип уникального идентификатора</typeparam>
-public interface IEntity<TKey>
-    where TKey : notnull, IEquatable<TKey>
+public interface IEntity<out TKey>
+    where TKey : struct, IEquatable<TKey>
 {
     /// <summary>
     /// Уникальный идентификатор

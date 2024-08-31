@@ -1,13 +1,13 @@
 ﻿using System;
 
-namespace Auction.Common.Domain.Exceptions;
+namespace Auction.Common.Domain.ValueObjectsExceptions;
 
 /// <summary>
-/// Доменное исключение для слишком длинной строки имени
+/// Доменное исключение для неправильной длины строки имени
 /// </summary>
 /// <param name="value">Значение имени</param>
 /// <param name="minLength">Минимальная допустимая длина строки</param>
 /// <param name="maxLength">Максимальная допустимая длина строки</param>
-public class NameLengthException(string value, int minLength, int maxLength)
+public class PersonNameLengthException(string value, int minLength, int maxLength)
     : ArgumentException(
         $"The name must be no shoter than {minLength} and no longer than {maxLength} characters, current lenth {value.Length}, the passed value is \"{value}\"");

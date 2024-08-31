@@ -1,6 +1,6 @@
 ﻿using Auction.Common.Domain.Entities;
-using Auction.Common.Domain.Exceptions;
-using Auction.Common.Domain.ValueObjects;
+using Auction.Common.Domain.EntitiesExceptions;
+using Auction.Common.Domain.ValueObjects.Numeric;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +12,10 @@ namespace Auction.WalletMicroservice.Domain.Entities;
 /// </summary>
 public class Bill : IEntity<Guid>
 {
+#pragma warning disable IDE0044 // Add readonly modifier
     private ICollection<Transfer>? _transfers;
     private ICollection<Freezing>? _freezings;
+#pragma warning restore IDE0044 // Add readonly modifier
 
     /// <summary>
     /// Уникальный идентификатор счёта
@@ -38,7 +40,7 @@ public class Bill : IEntity<Guid>
     /// <summary>
     /// Количество свободных денег на счету
     /// </summary>
-    public Money FreeMoney => new Money(Money.Value - FrozenMoney.Value);
+    public Money FreeMoney => Money - FrozenMoney;
 
     /// <summary>
     /// Все переводы с участием счёта
@@ -57,7 +59,9 @@ public class Bill : IEntity<Guid>
     /// <summary>
     /// Конструктор для EF
     /// </summary>
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     protected Bill() { }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
     /// <summary>
     /// Конструктор начального состояния счёта
@@ -87,14 +91,14 @@ public class Bill : IEntity<Guid>
         ICollection<Transfer> transfers,
         ICollection<Freezing> freezings)
     {
+        Id = GuidEmptyValueException.GetGuidOrThrowIfEmpty(id);
+
         Owner = owner ?? throw new ArgumentNullValueException(nameof(owner));
         Money = money ?? throw new ArgumentNullValueException(nameof(money));
         FrozenMoney = frozenMoney ?? throw new ArgumentNullValueException(nameof(frozenMoney));
 
         _transfers = transfers ?? throw new ArgumentNullValueException(nameof(transfers));
         _freezings = freezings ?? throw new ArgumentNullValueException(nameof(freezings));
-
-        Id = id;
     }
 
     private static void CheckMoney(Money money)
@@ -110,7 +114,7 @@ public class Bill : IEntity<Guid>
     {
         CheckMoney(money);
 
-        Money = new Money(Money.Value + money.Value);
+        Money += money;
     }
 
     /// <summary>
@@ -122,12 +126,12 @@ public class Bill : IEntity<Guid>
     {
         CheckMoney(money);
 
-        if (FreeMoney.Value < money.Value)
+        if (FreeMoney < money)
         {
             return false;
         }
 
-        Money = new Money(Money.Value - money.Value);
+        Money -= money;
 
         return true;
     }
@@ -141,13 +145,13 @@ public class Bill : IEntity<Guid>
     {
         CheckMoney(money);
 
-        if (FreeMoney.Value < money.Value)
+        if (FreeMoney < money)
         {
             return false;
         }
 
-        Money = new Money(Money.Value - money.Value);
-        FrozenMoney = new Money(FrozenMoney.Value + money.Value);
+        Money -= money;
+        FrozenMoney += money;
 
         return true;
     }
@@ -161,13 +165,13 @@ public class Bill : IEntity<Guid>
     {
         CheckMoney(money);
 
-        if (FrozenMoney.Value < money.Value)
+        if (FrozenMoney < money)
         {
             return false;
         }
 
-        Money = new Money(Money.Value + money.Value);
-        FrozenMoney = new Money(FrozenMoney.Value - money.Value);
+        Money += money;
+        FrozenMoney -= money;
 
         return true;
     }

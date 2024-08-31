@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Auction.Common.Domain.Exceptions;
+namespace Auction.Common.Domain.ValueObjectsExceptions;
 
 /// <summary>
 /// Исключение домена для пустогой строки текста

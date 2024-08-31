@@ -10,9 +10,9 @@ namespace Auction.Common.Domain.RepositoriesAbstractions;
 /// </summary>
 /// <typeparam name="TEntity">Тип сущности</typeparam>
 /// <typeparam name="TKey">Тип уникального идетификатора сущности</typeparam>
-public interface IRepository<TEntity, in TKey>
+public interface IRepository<TEntity, TKey>
     where TEntity : class, IEntity<TKey>
-    where TKey : notnull, IEquatable<TKey>
+    where TKey : struct, IEquatable<TKey>
 {
     /// <summary>
     /// Возвращает все сущности

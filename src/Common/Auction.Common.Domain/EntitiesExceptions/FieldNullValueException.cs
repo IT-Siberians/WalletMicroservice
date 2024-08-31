@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Auction.Common.Domain.Exceptions;
+namespace Auction.Common.Domain.EntitiesExceptions;
 
 /// <summary>
 /// Исключение домена для null-значения поля

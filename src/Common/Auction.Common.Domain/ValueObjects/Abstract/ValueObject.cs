@@ -1,13 +1,13 @@
-﻿using Auction.Common.Domain.Exceptions;
+﻿using Auction.Common.Domain.EntitiesExceptions;
 using System;
 
-namespace Auction.Common.Domain.ValueObjects;
+namespace Auction.Common.Domain.ValueObjects.Abstract;
 
 /// <summary>
 /// Базовый объект значения
 /// </summary>
 /// <typeparam name="T">Тип значения</typeparam>
-public abstract class ValueObject<T>
+public abstract class ValueObject<T> : IEquatable<ValueObject<T>>
 {
     /// <summary>
     /// Значение
@@ -36,12 +36,22 @@ public abstract class ValueObject<T>
         {
             return true;
         }
-        if (obj == null || obj.GetType() != GetType())
+
+        return Equals(obj as ValueObject<T>);
+    }
+
+    public bool Equals(ValueObject<T>? other)
+    {
+        if (ReferenceEquals(this, other))
+        {
+            return true;
+        }
+        if (other == null || other.GetType() != GetType())
         {
             return false;
         }
 
-        return Equals(Value, ((ValueObject<T>)obj).Value);
+        return Equals(Value, other.Value);
     }
 
     public override int GetHashCode() => Value!.GetHashCode();

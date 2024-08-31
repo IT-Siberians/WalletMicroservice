@@ -1,4 +1,4 @@
-﻿using Auction.Common.Domain.ValueObjects;
+﻿using Auction.Common.Domain.ValueObjects.Numeric;
 using Auction.WalletMicroservice.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

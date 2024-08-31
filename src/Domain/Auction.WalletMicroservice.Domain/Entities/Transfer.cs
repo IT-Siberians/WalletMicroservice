@@ -1,6 +1,6 @@
 ﻿using Auction.Common.Domain.Entities;
-using Auction.Common.Domain.Exceptions;
-using Auction.Common.Domain.ValueObjects;
+using Auction.Common.Domain.EntitiesExceptions;
+using Auction.Common.Domain.ValueObjects.Numeric;
 using System;
 
 namespace Auction.WalletMicroservice.Domain.Entities;
@@ -38,30 +38,32 @@ public class Transfer : IEntity<Guid>
     /// <summary>
     /// Конструктор для EF
     /// </summary>
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     protected Transfer() { }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
     /// <summary>
     /// Конструктор транзакции перевода денег между счетами в оплату лота
     /// </summary>
     /// <param name="id">Уникальный идентификатор транзакции перевода</param>
-    /// <param name="money">Количество переводимых денег</param>
+    /// <param name="price">Цена лота</param>
     /// <param name="fromBill">Счёт с которого переводят деньги</param>
     /// <param name="toBill">Счёт на который переводят деньги</param>
     /// <param name="lot">Лот в оплату которого выполняется перевод</param>
     /// <exception cref="ArgumentNullValueException">Если аргумент null</exception>
     public Transfer(
         Guid id,
-        Money money,
+        Price price,
         Bill fromBill,
         Bill toBill,
         Lot lot)
     {
-        Money = money ?? throw new ArgumentNullValueException(nameof(money));
+        Id = GuidEmptyValueException.GetGuidOrThrowIfEmpty(id);
+
+        Money = price ?? throw new ArgumentNullValueException(nameof(price));
         FromBill = fromBill ?? throw new ArgumentNullValueException(nameof(fromBill));
         ToBill = toBill ?? throw new ArgumentNullValueException(nameof(toBill));
         Lot = lot ?? throw new ArgumentNullValueException(nameof(lot));
-
-        Id = id;
     }
 
     /// <summary>
@@ -78,9 +80,9 @@ public class Transfer : IEntity<Guid>
         Bill? fromBill,
         Bill? toBill)
     {
-        Money = money ?? throw new ArgumentNullValueException(nameof(money));
+        Id = GuidEmptyValueException.GetGuidOrThrowIfEmpty(id);
 
-        Id = id;
+        Money = money ?? throw new ArgumentNullValueException(nameof(money));
 
         FromBill = fromBill;
         ToBill = toBill;

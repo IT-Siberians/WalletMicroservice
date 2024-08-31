@@ -1,4 +1,4 @@
-﻿using Auction.Common.Domain.ValueObjects;
+﻿using Auction.Common.Domain.ValueObjects.String;
 using Auction.WalletMicroservice.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -11,10 +11,10 @@ public class LotConfiguration : IEntityTypeConfiguration<Lot>
     {
         builder.Property(e => e.Title)
             .IsRequired()
-            .HasMaxLength(Name.MaxLength)
+            .HasMaxLength(Title.MaxLength)
             .HasConversion(
                 name => name.Value,
-                str => new Name(str)
+                str => new Title(str)
             );
         builder.Property(e => e.Description)
             .IsRequired()

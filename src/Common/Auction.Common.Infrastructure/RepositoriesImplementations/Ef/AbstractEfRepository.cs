@@ -1,5 +1,4 @@
 ﻿using Auction.Common.Domain.Entities;
-using Auction.Common.Domain.Exceptions;
 using Auction.Common.Domain.RepositoriesAbstractions;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -19,7 +18,7 @@ public class AbstractEfRepository<TDbContext, TEntity, TKey>
     : IRepository<TEntity, TKey>
     where TDbContext : DbContext
     where TEntity : class, IEntity<TKey>
-    where TKey : notnull, IEquatable<TKey>
+    where TKey : struct, IEquatable<TKey>
 {
     protected readonly TDbContext _dbContext;
 
@@ -27,7 +26,7 @@ public class AbstractEfRepository<TDbContext, TEntity, TKey>
     /// Конструктор базового EntityFramework-репозитория
     /// </summary>
     /// <param name="dbContext">Значение DB-контекста</param>
-    /// <exception cref="ArgumentNullValueException">Для null-значения</exception>
+    /// <exception cref="ArgumentNullException">Для null-значения</exception>
     protected AbstractEfRepository(TDbContext dbContext)
     {
         _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));

@@ -1,6 +1,7 @@
 ﻿using Auction.Common.Domain.Entities;
-using Auction.Common.Domain.Exceptions;
-using Auction.Common.Domain.ValueObjects;
+using Auction.Common.Domain.EntitiesExceptions;
+using Auction.Common.Domain.ValueObjects.Numeric;
+using Auction.Common.Domain.ValueObjects.String;
 using System;
 
 namespace Auction.WalletMicroservice.Domain.Entities;
@@ -23,7 +24,9 @@ public class Owner : AbstractPerson<Guid>
     /// <summary>
     /// Конструктор для EF
     /// </summary>
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     protected Owner() : base() { }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
     /// <summary>
     /// Основной конструктор владельца счёта
@@ -32,9 +35,11 @@ public class Owner : AbstractPerson<Guid>
     /// <param name="username">Имя владельца</param>
     /// <param name="bill">Счёт владельца</param>
     /// <exception cref="ArgumentNullValueException">Если аргумент null</exception>
-    public Owner(Guid id, Name username, Bill bill)
+    public Owner(Guid id, PersonName username, Bill bill)
         : base(id, username)
     {
+        GuidEmptyValueException.ThrowIfEmpty(id);
+
         Bill = bill ?? throw new ArgumentNullValueException(nameof(bill));
     }
 }

@@ -15,7 +15,7 @@ namespace Auction.Common.Infrastructure.RepositoriesImplementations.InMemory;
 public abstract class AbstractInMemoryRepository<TEntity, TKey>
     : IRepository<TEntity, TKey>
     where TEntity : class, IEntity<TKey>
-    where TKey : notnull, IEquatable<TKey>
+    where TKey : struct, IEquatable<TKey>
 {
     protected readonly IList<TEntity> _entities;
 

@@ -1,5 +1,5 @@
-﻿using Auction.Common.Domain.Exceptions;
-using Auction.Common.Domain.ValueObjects;
+﻿using Auction.Common.Domain.EntitiesExceptions;
+using Auction.Common.Domain.ValueObjects.String;
 using System;
 
 namespace Auction.Common.Domain.Entities;
@@ -9,7 +9,7 @@ namespace Auction.Common.Domain.Entities;
 /// </summary>
 /// <typeparam name="TKey">Тип идентификатора</typeparam>
 public abstract class AbstractLot<TKey> : IEntity<TKey>
-    where TKey : notnull, IEquatable<TKey>
+    where TKey : struct, IEquatable<TKey>
 {
     /// <summary>
     /// Уникальный идентификатор
@@ -19,7 +19,7 @@ public abstract class AbstractLot<TKey> : IEntity<TKey>
     /// <summary>
     /// Название лота
     /// </summary>
-    public Name Title { get; protected set; }
+    public Title Title { get; protected set; }
 
     /// <summary>
     /// Описание лота
@@ -29,7 +29,9 @@ public abstract class AbstractLot<TKey> : IEntity<TKey>
     /// <summary>
     /// Конструктор для EF
     /// </summary>
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     protected AbstractLot() { }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
     /// <summary>
     /// Основной конструктор лота
@@ -38,7 +40,7 @@ public abstract class AbstractLot<TKey> : IEntity<TKey>
     /// <param name="title">Название лота</param>
     /// <param name="description">Описание лота</param>
     /// <exception cref="ArgumentNullValueException">Для null-значений аргументов</exception>
-    protected AbstractLot(TKey id, Name title, Text description)
+    protected AbstractLot(TKey id, Title title, Text description)
     {
         Title = title ?? throw new ArgumentNullValueException(nameof(title));
         Description = description ?? throw new ArgumentNullValueException(nameof(description));
