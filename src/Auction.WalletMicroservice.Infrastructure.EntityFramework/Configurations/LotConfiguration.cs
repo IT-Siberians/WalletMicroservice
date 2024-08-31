@@ -13,7 +13,7 @@ public class LotConfiguration : IEntityTypeConfiguration<Lot>
             .IsRequired()
             .HasMaxLength(Title.MaxLength)
             .HasConversion(
-                name => name.Value,
+                title => title.Value,
                 str => new Title(str)
             );
         builder.Property(e => e.Description)
