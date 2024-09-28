@@ -7,9 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Auction.WalletMicroservice.Infrastructure.EntityFramework\Auction.WalletMicroservice.Infrastructure.EntityFramework.csproj" />
     <ProjectReference Include="..\..\Common\Auction.Common.Domain\Auction.Common.Domain.csproj" />
     <ProjectReference Include="..\..\Common\Auction.Common.Infrastructure\Auction.Common.Infrastructure.csproj" />
+    <ProjectReference Include="..\Auction.WalletMicroservice.Infrastructure.EntityFramework\Auction.WalletMicroservice.Infrastructure.EntityFramework.csproj" />
   </ItemGroup>
 
 </Project>
