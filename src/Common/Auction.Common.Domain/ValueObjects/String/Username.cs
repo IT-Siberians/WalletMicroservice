@@ -9,20 +9,21 @@ namespace Auction.Common.Domain.ValueObjects.String;
 /// Строка длиной от MinLength до MaxLength
 /// </summary>
 /// <param name="value">Значение имени</param>
-public class PersonName(string value)
-    : ValueObject<string>(value, Validate)
+public class Username(string value)
+    : StringValueObject(value, Validate)
 {
     public const int MinLength = 3;
     public const int MaxLength = 30;
 
-    public static readonly Regex ValidationRegex = new("(^[a-zA-Z_-]+$)", RegexOptions.Compiled);
+    public const string Pattern = "(^[a-zA-Z_-]+$)";
+    public static readonly Regex ValidationRegex = new(Pattern, RegexOptions.Compiled);
 
     private static void Validate(string value)
     {
-        if (value == null) throw new PersonNameNullValueException();
-        if (string.IsNullOrWhiteSpace(value)) throw new PersonNameEmptyValueException(value);
-        if (!IsCorrectLength(value)) throw new PersonNameLengthException(value, MinLength, MaxLength);
-        if (!ValidationRegex.IsMatch(value)) throw new PersonNameFormatException(value);
+        if (value == null) throw new UsernameNullValueException();
+        if (string.IsNullOrWhiteSpace(value)) throw new UsernameEmptyValueException(value);
+        if (!IsCorrectLength(value)) throw new UsernameLengthException(value, MinLength, MaxLength);
+        if (!ValidationRegex.IsMatch(value)) throw new UsernameFormatException(value, Pattern);
 
         if (!IsValid(value)) throw new ValidationInconsistencyException();
     }
@@ -30,6 +31,11 @@ public class PersonName(string value)
     private static bool IsCorrectLength(string value) =>
         MinLength <= value.Length && value.Length <= MaxLength;
 
+    /// <summary>
+    /// Проверяет, что значение можно перадать в конструктор
+    /// </summary>
+    /// <param name="value">Значение</param>
+    /// <returns></returns>
     public static bool IsValid(string value) =>
         !string.IsNullOrWhiteSpace(value)
         && IsCorrectLength(value)

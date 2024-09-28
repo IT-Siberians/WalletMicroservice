@@ -21,7 +21,7 @@ public class BaseEfRepositoryWithUpdate<TDbContext, TEntity, TKey>(TDbContext db
     {
         ArgumentNullException.ThrowIfNull(entity, nameof(entity));
 
-        var entry = DbContext.Update(entity);
+        var entry = DbSet.Update(entity);
 
         return entry.State == EntityState.Modified;
     }

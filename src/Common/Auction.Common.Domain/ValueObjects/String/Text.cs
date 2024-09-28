@@ -9,7 +9,7 @@ namespace Auction.Common.Domain.ValueObjects.String;
 /// </summary>
 /// <param name="value">Значение текста</param>
 public class Text(string value)
-    : ValueObject<string>(
+    : StringValueObject(
         value,
         value =>
         {
@@ -19,5 +19,10 @@ public class Text(string value)
             if (!IsValid(value)) throw new ValidationInconsistencyException();
         })
 {
+    /// <summary>
+    /// Проверяет, что значение можно перадать в конструктор
+    /// </summary>
+    /// <param name="value">Значение</param>
+    /// <returns></returns>
     public static bool IsValid(string value) => !string.IsNullOrWhiteSpace(value);
 }

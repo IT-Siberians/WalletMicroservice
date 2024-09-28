@@ -6,6 +6,6 @@ namespace Auction.Common.Domain.ValueObjectsExceptions;
 /// Исключение домена для неправильного формата имени
 /// </summary>
 /// <param name="value">Значение имени</param>
-public class PersonNameFormatException(string value)
+internal class UsernameFormatException(string value, string format)
     : FormatException(
-        $"The name is in the wrong format, the passed value is \"{value}\"");
+        $"The name is in the wrong format, the passed value is \"{value}\", it does not match the pattern {format}");

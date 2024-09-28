@@ -28,13 +28,10 @@ public class BaseEfRepository<TDbContext, TEntity, TKey>(TDbContext dbContext)
         where TEntity : class, IEntity<TKey>
         where TKey : struct, IEquatable<TKey>
 {
-    protected readonly TDbContext DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+    private bool _isDisposed;
 
-    /// <summary>
-    /// Возвращает IQueryable для создания запроса к набору сущностей
-    /// </summary>
-    public virtual IQueryable<TEntity> Query()
-        => DbContext.Set<TEntity>().AsQueryable();
+    protected readonly TDbContext DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+    protected readonly DbSet<TEntity> DbSet = dbContext?.Set<TEntity>() ?? throw new ArgumentNullException(nameof(dbContext));
 
     /// <summary>
     /// Возвращает сущности удовлетворяющие фильтру
@@ -53,8 +50,8 @@ public class BaseEfRepository<TDbContext, TEntity, TKey>(TDbContext dbContext)
         CancellationToken cancellationToken = default)
     {
         IQueryable<TEntity> query = useTracking
-            ? DbContext.Set<TEntity>()
-            : DbContext.Set<TEntity>().AsNoTracking();
+            ? DbSet
+            : DbSet.AsNoTracking();
 
         if (filter != null)
         {
@@ -89,7 +86,7 @@ public class BaseEfRepository<TDbContext, TEntity, TKey>(TDbContext dbContext)
         string[]? includeProperties = null,
         CancellationToken cancellationToken = default)
     {
-        IQueryable<TEntity> query = DbContext.Set<TEntity>();
+        IQueryable<TEntity> query = DbSet;
 
         if (includeProperties != null)
         {
@@ -114,8 +111,31 @@ public class BaseEfRepository<TDbContext, TEntity, TKey>(TDbContext dbContext)
     {
         ArgumentNullException.ThrowIfNull(entity, nameof(entity));
 
-        var entry = await DbContext.AddAsync(entity, cancellationToken);
+        var entry = await DbSet.AddAsync(entity, cancellationToken);
 
         return entry.State == EntityState.Added;
+    }
+
+    /// <summary>
+    /// Сохраняет изменения
+    /// </summary>
+    public virtual void SaveChanges() => DbContext.SaveChanges();
+
+    /// <summary>
+    /// Сохраняет изменения асинхронно
+    /// </summary>
+    /// <param name="cancellationToken">Токен отмены</param>
+    public virtual Task SaveChangesAsync(CancellationToken cancellationToken = default)
+        => DbContext.SaveChangesAsync(cancellationToken);
+
+    public virtual void Dispose()
+    {
+        if (!_isDisposed)
+        {
+            DbContext.Dispose();
+        }
+
+        _isDisposed = true;
+        GC.SuppressFinalize(this);
     }
 }

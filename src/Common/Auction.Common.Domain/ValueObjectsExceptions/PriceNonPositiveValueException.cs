@@ -6,6 +6,6 @@ namespace Auction.Common.Domain.ValueObjectsExceptions;
 /// Исключение домена для неположительного значения цены
 /// </summary>
 /// <param name="value">Значение цены</param>
-public class PriceNonPositiveValueException(decimal value)
+internal class PriceNonPositiveValueException(decimal value)
     : ArgumentException(
         $"The price value must be greater than 0, the passed value is: {value}");

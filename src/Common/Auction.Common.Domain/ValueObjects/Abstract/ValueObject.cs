@@ -7,7 +7,9 @@ namespace Auction.Common.Domain.ValueObjects.Abstract;
 /// Базовый объект значения
 /// </summary>
 /// <typeparam name="T">Тип значения</typeparam>
-public abstract class ValueObject<T> : IEquatable<ValueObject<T>>
+public abstract class ValueObject<T>
+    : IValueObject<T>,
+    IEquatable<ValueObject<T>>
 {
     /// <summary>
     /// Значение
@@ -30,6 +32,8 @@ public abstract class ValueObject<T> : IEquatable<ValueObject<T>>
         Value = value;
     }
 
+    public override string? ToString() => Value!.ToString();
+
     public override bool Equals(object? obj)
     {
         if (ReferenceEquals(this, obj))
@@ -46,7 +50,7 @@ public abstract class ValueObject<T> : IEquatable<ValueObject<T>>
         {
             return true;
         }
-        if (other == null || other.GetType() != GetType())
+        if (other is null || other.GetType() != GetType())
         {
             return false;
         }
@@ -55,6 +59,4 @@ public abstract class ValueObject<T> : IEquatable<ValueObject<T>>
     }
 
     public override int GetHashCode() => Value!.GetHashCode();
-
-    public override string? ToString() => Value!.ToString();
 }

@@ -19,7 +19,7 @@ public abstract class AbstractPerson<TKey> : IEntity<TKey>, IDeletableSoftly
     /// <summary>
     /// Имя пользователя
     /// </summary>
-    public PersonName Username { get; protected set; }
+    public Username Username { get; protected set; }
 
     /// <summary>
     /// Является ли пользователь удалённым
@@ -39,7 +39,7 @@ public abstract class AbstractPerson<TKey> : IEntity<TKey>, IDeletableSoftly
     /// <param name="id">Идентификатор</param>
     /// <param name="username">Имя пользователя</param>
     /// <exception cref="ArgumentNullValueException">Для null-значения аргумента</exception>
-    protected AbstractPerson(TKey id, PersonName username)
+    protected AbstractPerson(TKey id, Username username)
     {
         Username = username ?? throw new ArgumentNullValueException(nameof(username));
 
@@ -56,7 +56,7 @@ public abstract class AbstractPerson<TKey> : IEntity<TKey>, IDeletableSoftly
     /// </summary>
     /// <param name="username">Имя пользователя</param>
     /// <exception cref="ArgumentNullValueException">Для null-значения аргумента</exception>
-    public virtual void ChangeUsername(PersonName username)
+    public virtual void ChangeUsername(Username username)
     {
         Username = username ?? throw new ArgumentNullValueException(nameof(username));
     }

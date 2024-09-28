@@ -6,6 +6,6 @@ namespace Auction.Common.Domain.RepositoriesAbstractions.Base;
 
 public interface IBaseRepositoryWithUpdateAndDelete<TEntity, TKey>
     : IBaseRepositoryWithUpdate<TEntity, TKey>,
-    IUpdatableRepository<TEntity>
+    IDeletableRepository<TEntity, TKey>
         where TEntity : class, IEntity<TKey>
         where TKey : struct, IEquatable<TKey>;

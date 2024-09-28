@@ -9,7 +9,7 @@ namespace Auction.Common.Domain.ValueObjects.String;
 /// </summary>
 /// <param name="value">Значение заголовка</param>
 public class Title(string value)
-    : ValueObject<string>(value, Validate)
+    : StringValueObject(value, Validate)
 {
     public const int MinLength = 10;
     public const int MaxLength = 100;
@@ -26,6 +26,11 @@ public class Title(string value)
     private static bool IsCorrectLength(string value) =>
         MinLength <= value.Length && value.Length <= MaxLength;
 
+    /// <summary>
+    /// Проверяет, что значение можно перадать в конструктор
+    /// </summary>
+    /// <param name="value">Значение</param>
+    /// <returns></returns>
     public static bool IsValid(string value) =>
         !string.IsNullOrWhiteSpace(value)
         && IsCorrectLength(value);

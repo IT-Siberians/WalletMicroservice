@@ -28,12 +28,6 @@ public class BaseMemoryRepository<TEntity, TKey>(IList<TEntity> entities)
     protected readonly IList<TEntity> Entities = entities ?? throw new ArgumentNullException(nameof(entities));
 
     /// <summary>
-    /// Возвращает IQueryable для создания запроса к набору сущностей
-    /// </summary>
-    public virtual IQueryable<TEntity> Query()
-        => Entities.AsQueryable();
-
-    /// <summary>
     /// Возвращает сущности удовлетворяющие фильтру
     /// </summary>
     /// <param name="filter">Фильтр</param>
@@ -90,5 +84,21 @@ public class BaseMemoryRepository<TEntity, TKey>(IList<TEntity> entities)
         Entities.Add(entity);
 
         return Task.FromResult(true);
+    }
+
+    /// <summary>
+    /// Сохраняет изменения
+    /// </summary>
+    public virtual void SaveChanges() { }
+
+    /// <summary>
+    /// Сохраняет изменения асинхронно
+    /// </summary>
+    public virtual Task SaveChangesAsync(CancellationToken _ = default)
+        => Task.CompletedTask;
+
+    public virtual void Dispose()
+    {
+        GC.SuppressFinalize(this);
     }
 }

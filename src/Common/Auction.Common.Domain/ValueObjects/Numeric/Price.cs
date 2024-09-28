@@ -17,5 +17,10 @@ public class Price(decimal value) : Money(value, Validate)
         if (!IsValid(value)) throw new ValidationInconsistencyException();
     }
 
+    /// <summary>
+    /// Проверяет, что значение можно перадать в конструктор
+    /// </summary>
+    /// <param name="value">Значение</param>
+    /// <returns></returns>
     public static new bool IsValid(decimal value) => value > 0;
 }

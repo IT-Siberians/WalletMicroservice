@@ -6,6 +6,6 @@ namespace Auction.Common.Domain.ValueObjectsExceptions;
 /// Исключение домена для отрицательного значения количества денег
 /// </summary>
 /// <param name="value">Значение количества денег</param>
-public class MoneyNegativeValueException(decimal value)
+internal class MoneyNegativeValueException(decimal value)
     : ArgumentException(
         $"The money value cannot be less than 0, the passed value is: {value}");

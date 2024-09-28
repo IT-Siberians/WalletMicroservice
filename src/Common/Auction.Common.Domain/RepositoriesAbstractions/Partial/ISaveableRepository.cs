@@ -1,12 +1,12 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 
-namespace Auction.Common.Domain.RepositoriesAbstractions;
+namespace Auction.Common.Domain.RepositoriesAbstractions.Partial;
 
 /// <summary>
-/// Интерфейс UnitOfWork
+/// Интерфейс репозитория для сохранения изменений
 /// </summary>
-public interface IUnitOfWork
+public interface ISaveableRepository
 {
     /// <summary>
     /// Сохраняет изменения

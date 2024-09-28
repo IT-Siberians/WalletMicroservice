@@ -5,8 +5,9 @@ using System;
 namespace Auction.Common.Domain.RepositoriesAbstractions.Base;
 
 public interface IBaseRepository<TEntity, TKey>
-    : IGetableRepository<TEntity, TKey>,
-    IAddableRepository<TEntity>,
-    IQueryableRepository<TEntity>
+    : IDisposable,
+    ISaveableRepository,
+    IGetableRepository<TEntity, TKey>,
+    IAddableRepository<TEntity>
         where TEntity : class, IEntity<TKey>
         where TKey : struct, IEquatable<TKey>;
