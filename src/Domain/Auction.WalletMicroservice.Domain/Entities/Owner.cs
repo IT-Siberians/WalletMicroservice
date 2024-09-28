@@ -35,7 +35,7 @@ public class Owner : AbstractPerson<Guid>
     /// <param name="username">Имя владельца</param>
     /// <param name="bill">Счёт владельца</param>
     /// <exception cref="ArgumentNullValueException">Если аргумент null</exception>
-    public Owner(Guid id, PersonName username, Bill bill)
+    public Owner(Guid id, Username username, Bill bill)
         : base(id, username)
     {
         GuidEmptyValueException.ThrowIfEmpty(id);

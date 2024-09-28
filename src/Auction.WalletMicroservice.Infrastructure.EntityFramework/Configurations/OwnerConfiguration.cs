@@ -11,10 +11,10 @@ public class OwnerConfiguration : IEntityTypeConfiguration<Owner>
     {
         builder.Property(o => o.Username)
             .IsRequired()
-            .HasMaxLength(PersonName.MaxLength)
+            .HasMaxLength(Username.MaxLength)
             .HasConversion(
                 name => name.Value,
-                str => new PersonName(str)
+                str => new Username(str)
             );
 
         builder.HasOne(o => o.Bill).WithOne(b => b.Owner);
