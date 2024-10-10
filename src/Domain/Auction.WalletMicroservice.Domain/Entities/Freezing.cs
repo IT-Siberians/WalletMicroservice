@@ -16,6 +16,11 @@ public class Freezing : IEntity<Guid>
     public Guid Id { get; }
 
     /// <summary>
+    /// Двта и время транзакции
+    /// </summary>
+    public DateTime DateTime { get; }
+
+    /// <summary>
     /// Тип транзакции: false - заморозка, true - разморозка
     /// </summary>
     public bool IsUnfreezing { get; }
@@ -60,5 +65,7 @@ public class Freezing : IEntity<Guid>
         Lot = lot ?? throw new ArgumentNullValueException(nameof(lot));
 
         IsUnfreezing = isUnfreezing;
+
+        DateTime = DateTime.UtcNow;
     }
 }

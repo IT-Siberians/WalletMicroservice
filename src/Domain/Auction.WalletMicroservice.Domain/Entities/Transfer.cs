@@ -16,6 +16,11 @@ public class Transfer : IEntity<Guid>
     public Guid Id { get; }
 
     /// <summary>
+    /// Двта и время транзакции
+    /// </summary>
+    public DateTime DateTime { get; }
+
+    /// <summary>
     /// Счёт с которого переводят деньги
     /// </summary>
     public Bill? FromBill { get; }
@@ -64,6 +69,8 @@ public class Transfer : IEntity<Guid>
         FromBill = fromBill ?? throw new ArgumentNullValueException(nameof(fromBill));
         ToBill = toBill ?? throw new ArgumentNullValueException(nameof(toBill));
         Lot = lot ?? throw new ArgumentNullValueException(nameof(lot));
+
+        DateTime = DateTime.UtcNow;
     }
 
     /// <summary>
@@ -87,5 +94,7 @@ public class Transfer : IEntity<Guid>
         FromBill = fromBill;
         ToBill = toBill;
         Lot = null;
+
+        DateTime = DateTime.UtcNow;
     }
 }

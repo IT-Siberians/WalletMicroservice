@@ -33,11 +33,11 @@ public class BaseEfRepositoryWithUpdateAndDelete<TDbContext, TEntity, TKey>(TDbC
     /// <returns>true если сущность существует, иначе false</returns>
     public virtual async Task<bool> DeleteByIdAsync(
         TKey id,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken = default)
     {
         var entity = await GetByIdAsync(id, cancellationToken: cancellationToken);
 
-        if (entity == null)
+        if (entity is null)
         {
             return false;
         }

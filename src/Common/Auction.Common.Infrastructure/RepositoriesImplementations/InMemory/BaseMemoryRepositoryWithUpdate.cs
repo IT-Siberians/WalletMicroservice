@@ -23,7 +23,7 @@ public class BaseMemoryRepositoryWithUpdate<TEntity, TKey>(IList<TEntity> entiti
 
         var existingEntity = Entities.FirstOrDefault(e => e.Id.Equals(entity.Id));
 
-        if (existingEntity == null)
+        if (existingEntity is null)
         {
             return false;
         }

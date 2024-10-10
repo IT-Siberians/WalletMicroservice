@@ -28,7 +28,7 @@ public interface IGetableRepository<TEntity, TKey>
     Task<IEnumerable<TEntity>> GetAsync<TOrderKey>(
         Expression<Func<TEntity, bool>>? filter = null,
         Expression<Func<TEntity, TOrderKey>>? orderKeySelector = null,
-        string[]? includeProperties = null,
+        string? includeProperties = null,
         bool useTracking = true,
         CancellationToken cancellationToken = default);
 
@@ -41,6 +41,6 @@ public interface IGetableRepository<TEntity, TKey>
     /// <returns>Найденная сущность или null</returns>
     Task<TEntity?> GetByIdAsync(
         TKey id,
-        string[]? includeProperties = null,
+        string? includeProperties = null,
         CancellationToken cancellationToken = default);
 }

@@ -20,7 +20,7 @@ public class Username(string value)
 
     private static void Validate(string value)
     {
-        if (value == null) throw new UsernameNullValueException();
+        if (value is null) throw new UsernameNullValueException();
         if (string.IsNullOrWhiteSpace(value)) throw new UsernameEmptyValueException(value);
         if (!IsCorrectLength(value)) throw new UsernameLengthException(value, MinLength, MaxLength);
         if (!ValidationRegex.IsMatch(value)) throw new UsernameFormatException(value, Pattern);

@@ -13,7 +13,7 @@ public class Text(string value)
         value,
         value =>
         {
-            if (value == null) throw new TextNullValueException();
+            if (value is null) throw new TextNullValueException();
             if (string.IsNullOrWhiteSpace(value)) throw new TextEmptyValueException(value);
 
             if (!IsValid(value)) throw new ValidationInconsistencyException();

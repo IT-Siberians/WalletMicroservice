@@ -35,7 +35,7 @@ public class BaseMemoryRepositoryWithUpdateAndDelete<TEntity, TKey>(IList<TEntit
     {
         var entity = await GetByIdAsync(id);
 
-        if (entity == null)
+        if (entity is null)
         {
             return false;
         }

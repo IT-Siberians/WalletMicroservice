@@ -25,5 +25,7 @@ public interface IDeletableRepository<TEntity, TKey>
     /// <param name="id">Уникальный идентификатор сущности</param>
     /// <param name="cancellationToken">Токен отмены</param>
     /// <returns>true если сущность существует, иначе false</returns>
-    Task<bool> DeleteByIdAsync(TKey id, CancellationToken cancellationToken);
+    Task<bool> DeleteByIdAsync(
+        TKey id,
+        CancellationToken cancellationToken = default);
 }

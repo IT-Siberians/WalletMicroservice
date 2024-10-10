@@ -13,7 +13,8 @@ namespace Auction.WalletMicroservice.Domain.Entities;
 public class Bill : IEntity<Guid>
 {
 #pragma warning disable IDE0044 // Add readonly modifier
-    private ICollection<Transfer>? _transfers;
+    private ICollection<Transfer>? _transfersTo;
+    private ICollection<Transfer>? _transfersFrom;
     private ICollection<Freezing>? _freezings;
 #pragma warning restore IDE0044 // Add readonly modifier
 
@@ -23,14 +24,19 @@ public class Bill : IEntity<Guid>
     public Guid Id { get; }
 
     /// <summary>
+    /// Уникальный идентификатор владельца счёта
+    /// </summary>
+    public Guid OwnerId { get; }
+
+    /// <summary>
     /// Владелец счёта
     /// </summary>
     public Owner Owner { get; }
 
     /// <summary>
-    /// Количество денег на счету
+    /// Количество свободных денег на счету
     /// </summary>
-    public Money Money { get; protected set; }
+    public Money FreeMoney { get; protected set; }
 
     /// <summary>
     /// Количество замороженных денег на счету
@@ -38,16 +44,23 @@ public class Bill : IEntity<Guid>
     public Money FrozenMoney { get; protected set; }
 
     /// <summary>
-    /// Количество свободных денег на счету
+    /// Количество всех денег на счету
     /// </summary>
-    public Money FreeMoney => Money - FrozenMoney;
+    public Money Money => FreeMoney + FrozenMoney;
 
     /// <summary>
-    /// Все переводы с участием счёта
+    /// Все переводы на счёт
     /// </summary>
-    public IReadOnlyCollection<Transfer> Transfers => _transfers
+    public IReadOnlyCollection<Transfer> TransfersTo => _transfersTo
         ?.ToList()
-        ?? throw new FieldNullValueException(nameof(_transfers));
+        ?? throw new FieldNullValueException(nameof(_transfersTo));
+
+    /// <summary>
+    /// Все переводы со счёта
+    /// </summary>
+    public IReadOnlyCollection<Transfer> TransfersFrom => _transfersFrom
+        ?.ToList()
+        ?? throw new FieldNullValueException(nameof(_transfersFrom));
 
     /// <summary>
     /// Все замораживания/размораживания денег по счёту
@@ -86,7 +99,7 @@ public class Bill : IEntity<Guid>
     public Bill(
         Guid id,
         Owner owner,
-        Money money,
+        Money freeMoney,
         Money frozenMoney,
         ICollection<Transfer> transfers,
         ICollection<Freezing> freezings)
@@ -94,16 +107,13 @@ public class Bill : IEntity<Guid>
         Id = GuidEmptyValueException.GetGuidOrThrowIfEmpty(id);
 
         Owner = owner ?? throw new ArgumentNullValueException(nameof(owner));
-        Money = money ?? throw new ArgumentNullValueException(nameof(money));
+        FreeMoney = freeMoney ?? throw new ArgumentNullValueException(nameof(freeMoney));
         FrozenMoney = frozenMoney ?? throw new ArgumentNullValueException(nameof(frozenMoney));
 
-        _transfers = transfers ?? throw new ArgumentNullValueException(nameof(transfers));
-        _freezings = freezings ?? throw new ArgumentNullValueException(nameof(freezings));
-    }
+        OwnerId = owner.Id;
 
-    private static void CheckMoney(Money money)
-    {
-        if (money == null) throw new ArgumentNullValueException(nameof(money));
+        _transfersTo = transfers ?? throw new ArgumentNullValueException(nameof(transfers));
+        _freezings = freezings ?? throw new ArgumentNullValueException(nameof(freezings));
     }
 
     /// <summary>
@@ -112,9 +122,9 @@ public class Bill : IEntity<Guid>
     /// <param name="money">Количество денег</param>
     public void PutMoney(Money money)
     {
-        CheckMoney(money);
+        ArgumentNullValueException.ThrowIfNull(money, nameof(money));
 
-        Money += money;
+        FreeMoney += money;
     }
 
     /// <summary>
@@ -124,14 +134,33 @@ public class Bill : IEntity<Guid>
     /// <returns>true если на счёте достаточно свободных денег, иначе false</returns>
     public bool WithdrawMoney(Money money)
     {
-        CheckMoney(money);
+        ArgumentNullValueException.ThrowIfNull(money, nameof(money));
 
         if (FreeMoney < money)
         {
             return false;
         }
 
-        Money -= money;
+        FreeMoney -= money;
+
+        return true;
+    }
+
+    /// <summary>
+    /// Снимает заданную сумму денег со счёта, если на счёте достаточно зарезервированных денег
+    /// </summary>
+    /// <param name="price">Количество денег</param>
+    /// <returns>true если на счёте достаточно зарезервированных денег, иначе false</returns>
+    public bool PayForLot(Price price)
+    {
+        ArgumentNullValueException.ThrowIfNull(price, nameof(price));
+
+        if (FrozenMoney < price)
+        {
+            return false;
+        }
+
+        FrozenMoney -= price;
 
         return true;
     }
@@ -143,14 +172,14 @@ public class Bill : IEntity<Guid>
     /// <returns>true если на счёте достаточно свободных денег, иначе false</returns>
     public bool ReserveMoney(Money money)
     {
-        CheckMoney(money);
+        ArgumentNullValueException.ThrowIfNull(money, nameof(money));
 
         if (FreeMoney < money)
         {
             return false;
         }
 
-        Money -= money;
+        FreeMoney -= money;
         FrozenMoney += money;
 
         return true;
@@ -163,31 +192,45 @@ public class Bill : IEntity<Guid>
     /// <returns>true если на счёте достаточно замороженных денег, иначе false</returns>
     public bool RealeaseMoney(Money money)
     {
-        CheckMoney(money);
+        ArgumentNullValueException.ThrowIfNull(money, nameof(money));
 
         if (FrozenMoney < money)
         {
             return false;
         }
 
-        Money += money;
+        FreeMoney += money;
         FrozenMoney -= money;
 
         return true;
     }
 
     /// <summary>
-    /// Добавяет транзакицю перевода с участием счёта
+    /// Добавяет транзакицю перевода на счёт
     /// </summary>
     /// <param name="transfer">Перевод между счетами</param>
     /// <exception cref="ArgumentNullValueException">Если аргумент null</exception>
     /// <exception cref="FieldNullValueException">Если поле null</exception>
-    public void AddTransfer(Transfer transfer)
+    public void AddTransferTo(Transfer transfer)
     {
-        if (transfer == null) throw new ArgumentNullValueException(nameof(transfer));
-        if (_transfers == null) throw new FieldNullValueException(nameof(_transfers));
+        if (transfer is null) throw new ArgumentNullValueException(nameof(transfer));
+        if (_transfersTo is null) throw new FieldNullValueException(nameof(_transfersTo));
 
-        _transfers.Add(transfer);
+        _transfersTo.Add(transfer);
+    }
+
+    /// <summary>
+    /// Добавяет транзакицю перевода со счёта
+    /// </summary>
+    /// <param name="transfer">Перевод между счетами</param>
+    /// <exception cref="ArgumentNullValueException">Если аргумент null</exception>
+    /// <exception cref="FieldNullValueException">Если поле null</exception>
+    public void AddTransferFrom(Transfer transfer)
+    {
+        if (transfer is null) throw new ArgumentNullValueException(nameof(transfer));
+        if (_transfersFrom is null) throw new FieldNullValueException(nameof(_transfersFrom));
+
+        _transfersFrom.Add(transfer);
     }
 
     /// <summary>
@@ -198,8 +241,8 @@ public class Bill : IEntity<Guid>
     /// <exception cref="FieldNullValueException">Если поле null</exception>
     public void AddFreezing(Freezing freezing)
     {
-        if (freezing == null) throw new ArgumentNullValueException(nameof(freezing));
-        if (_freezings == null) throw new FieldNullValueException(nameof(_freezings));
+        if (freezing is null) throw new ArgumentNullValueException(nameof(freezing));
+        if (_freezings is null) throw new FieldNullValueException(nameof(_freezings));
 
         _freezings.Add(freezing);
     }

@@ -21,7 +21,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auction.Common.Infrastructu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auction.WalletMicroservice.Infrastructure.RepositoriesImplementations", "Infrastructure\Auction.WalletMicroservice.Infrastructure.RepositoriesImplementations\Auction.WalletMicroservice.Infrastructure.RepositoriesImplementations.csproj", "{7E1DFD9F-703A-42D3-ABB0-9A97563F4167}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auction.WalletMicroservice.Infrastructure.EntityFramework", "Infrastructure\Auction.WalletMicroservice.Infrastructure.EntityFramework\Auction.WalletMicroservice.Infrastructure.EntityFramework.csproj", "{E5955516-81AB-4619-A90C-3292E9A12024}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auction.WalletMicroservice.Infrastructure.EntityFramework", "Infrastructure\Auction.WalletMicroservice.Infrastructure.EntityFramework\Auction.WalletMicroservice.Infrastructure.EntityFramework.csproj", "{E5955516-81AB-4619-A90C-3292E9A12024}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auction.WalletMicroservice.Application.Models", "Application\Auction.WalletMicroservice.Application.Models\Auction.WalletMicroservice.Application.Models.csproj", "{E1FA112D-BFCA-4566-A541-E5E7588807F2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auction.WalletMicroservice.Application.Services", "Application\Auction.WalletMicroservice.Application.Services\Auction.WalletMicroservice.Application.Services.csproj", "{C370EE47-2949-4B43-A767-4C93C292C130}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auction.Common.Application", "Common\Auction.Common.Application\Auction.Common.Application.csproj", "{D6491B3E-CFDC-4A35-B724-4EE55AC660D8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auction.WalletMicroservice.Presentation.WebApi", "Presentation\Auction.WalletMicroservice.Presentation.WebApi\Auction.WalletMicroservice.Presentation.WebApi.csproj", "{011EA55F-82D8-4BFC-B052-CC6289053406}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auction.Common.Presentation", "Common\Auction.Common.Presentation\Auction.Common.Presentation.csproj", "{8D281F64-F507-4241-8905-7A3A482D01B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +59,26 @@ Global
 		{E5955516-81AB-4619-A90C-3292E9A12024}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5955516-81AB-4619-A90C-3292E9A12024}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5955516-81AB-4619-A90C-3292E9A12024}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1FA112D-BFCA-4566-A541-E5E7588807F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1FA112D-BFCA-4566-A541-E5E7588807F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1FA112D-BFCA-4566-A541-E5E7588807F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1FA112D-BFCA-4566-A541-E5E7588807F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C370EE47-2949-4B43-A767-4C93C292C130}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C370EE47-2949-4B43-A767-4C93C292C130}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C370EE47-2949-4B43-A767-4C93C292C130}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C370EE47-2949-4B43-A767-4C93C292C130}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6491B3E-CFDC-4A35-B724-4EE55AC660D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6491B3E-CFDC-4A35-B724-4EE55AC660D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6491B3E-CFDC-4A35-B724-4EE55AC660D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6491B3E-CFDC-4A35-B724-4EE55AC660D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{011EA55F-82D8-4BFC-B052-CC6289053406}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{011EA55F-82D8-4BFC-B052-CC6289053406}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{011EA55F-82D8-4BFC-B052-CC6289053406}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{011EA55F-82D8-4BFC-B052-CC6289053406}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D281F64-F507-4241-8905-7A3A482D01B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D281F64-F507-4241-8905-7A3A482D01B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D281F64-F507-4241-8905-7A3A482D01B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D281F64-F507-4241-8905-7A3A482D01B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -59,6 +89,11 @@ Global
 		{76A07E01-B375-41C1-8CF0-702EFAC4F5CA} = {481D73A4-2BE8-43BE-8660-20C9A7F93F45}
 		{7E1DFD9F-703A-42D3-ABB0-9A97563F4167} = {C7EA8E12-113A-4216-B4A2-43E2B4C01EDB}
 		{E5955516-81AB-4619-A90C-3292E9A12024} = {C7EA8E12-113A-4216-B4A2-43E2B4C01EDB}
+		{E1FA112D-BFCA-4566-A541-E5E7588807F2} = {ACCA362F-449B-4460-8716-F18EC4FF6E72}
+		{C370EE47-2949-4B43-A767-4C93C292C130} = {ACCA362F-449B-4460-8716-F18EC4FF6E72}
+		{D6491B3E-CFDC-4A35-B724-4EE55AC660D8} = {481D73A4-2BE8-43BE-8660-20C9A7F93F45}
+		{011EA55F-82D8-4BFC-B052-CC6289053406} = {9546BC58-DB3E-4F2E-B010-77C5CEF4F5DB}
+		{8D281F64-F507-4241-8905-7A3A482D01B4} = {481D73A4-2BE8-43BE-8660-20C9A7F93F45}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {64863294-4771-4C70-A6CB-C8908245E066}

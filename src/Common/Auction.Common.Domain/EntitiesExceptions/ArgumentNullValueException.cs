@@ -9,4 +9,10 @@ namespace Auction.Common.Domain.EntitiesExceptions;
 public class ArgumentNullValueException(string argumentName)
     : ArgumentNullException(
         argumentName,
-        $"Argument \"{argumentName}\" value is null");
+        $"Argument \"{argumentName}\" value is null")
+{
+    public static new void ThrowIfNull(object? value, string argumentName)
+    {
+        if (value is null) throw new ArgumentNullValueException(argumentName);
+    }
+}

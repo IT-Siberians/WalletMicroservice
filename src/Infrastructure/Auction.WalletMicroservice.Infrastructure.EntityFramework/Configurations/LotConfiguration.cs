@@ -5,22 +5,22 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Auction.WalletMicroservice.Infrastructure.EntityFramework.Configurations;
 
-public class LotConfiguration : IEntityTypeConfiguration<Lot>
+internal class LotConfiguration : IEntityTypeConfiguration<Lot>
 {
     public void Configure(EntityTypeBuilder<Lot> builder)
     {
-        builder.Property(e => e.Title)
-            .IsRequired()
-            .HasMaxLength(Title.MaxLength)
-            .HasConversion(
-                title => title.Value,
-                str => new Title(str)
-            );
-        builder.Property(e => e.Description)
-            .IsRequired()
-            .HasConversion(
-                text => text.Value,
-                str => new Text(str)
-            );
+        builder.HasKey(e => e.Id);
+
+        builder.OwnsOne(
+            e => e.Title,
+            a => a.Property(t => t.Value)
+                .HasColumnName("Title")
+                .HasMaxLength(Title.MaxLength)
+                .IsRequired());
+        builder.OwnsOne(
+            e => e.Description,
+            a => a.Property(t => t.Value)
+                .HasColumnName("Description")
+                .IsRequired());
     }
 }

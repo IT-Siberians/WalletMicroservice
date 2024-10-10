@@ -1,29 +1,40 @@
-﻿using Auction.Common.Domain.ValueObjects.Numeric;
-using Auction.WalletMicroservice.Domain.Entities;
+﻿using Auction.WalletMicroservice.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Auction.WalletMicroservice.Infrastructure.EntityFramework.Configurations;
 
-public class BillConfiguration : IEntityTypeConfiguration<Bill>
+internal class BillConfiguration : IEntityTypeConfiguration<Bill>
 {
     public void Configure(EntityTypeBuilder<Bill> builder)
     {
-        builder.Property(b => b.Money)
-            .HasConversion(
-                money => money.Value,
-                number => new Money(number)
-            );
-        builder.Property(b => b.FrozenMoney)
-            .HasConversion(
-                money => money.Value,
-                number => new Money(number)
-            );
+        builder.HasKey(b => b.Id);
 
-        builder.HasOne(b => b.Owner).WithOne(o => o.Bill);
+        builder.Ignore(b => b.Money);
+        builder.Ignore(b => b.TransfersTo);
+        builder.Ignore(b => b.TransfersFrom);
+        builder.Ignore(b => b.Freezings);
 
-        builder.HasMany<Transfer>("_transfers").WithOne(t => t.FromBill);
-        builder.HasMany<Transfer>("_transfers").WithOne(t => t.ToBill);
+        builder.OwnsOne(
+            b => b.FreeMoney,
+            a => a.Property(m => m.Value)
+                .HasColumnName("FreeMoney")
+                .HasColumnType("money")
+                .IsRequired());
+        builder.OwnsOne(
+            b => b.FrozenMoney,
+            a => a.Property(m => m.Value)
+                .HasColumnName("FrozenMoney")
+                .HasColumnType("money")
+                .IsRequired());
+
+        builder.HasOne(b => b.Owner)
+            .WithOne(o => o.Bill)
+            .HasForeignKey<Bill>(b => b.OwnerId)
+            .IsRequired();
+
+        builder.HasMany<Transfer>("_transfersTo").WithOne(t => t.ToBill);
+        builder.HasMany<Transfer>("_transfersFrom").WithOne(t => t.FromBill);
         builder.HasMany<Freezing>("_freezings").WithOne(f => f.Bill);
     }
 }

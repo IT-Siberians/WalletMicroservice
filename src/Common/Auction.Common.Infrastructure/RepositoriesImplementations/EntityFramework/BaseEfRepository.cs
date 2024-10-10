@@ -45,7 +45,7 @@ public class BaseEfRepository<TDbContext, TEntity, TKey>(TDbContext dbContext)
     public virtual async Task<IEnumerable<TEntity>> GetAsync<TOrderKey>(
         Expression<Func<TEntity, bool>>? filter = null,
         Expression<Func<TEntity, TOrderKey>>? orderKeySelector = null,
-        string[]? includeProperties = null,
+        string? includeProperties = null,
         bool useTracking = true,
         CancellationToken cancellationToken = default)
     {
@@ -53,20 +53,22 @@ public class BaseEfRepository<TDbContext, TEntity, TKey>(TDbContext dbContext)
             ? DbSet
             : DbSet.AsNoTracking();
 
-        if (filter != null)
+        if (filter is not null)
         {
             query = query.Where(filter);
         }
 
-        if (includeProperties != null)
+        if (includeProperties is not null)
         {
-            foreach (var includeProperty in includeProperties)
+            var propertiesArray = includeProperties.Split(", ");
+
+            foreach (var includeProperty in propertiesArray)
             {
                 query = query.Include(includeProperty);
             }
         }
 
-        if (orderKeySelector != null)
+        if (orderKeySelector is not null)
         {
             query = query.OrderBy(orderKeySelector);
         }
@@ -83,14 +85,16 @@ public class BaseEfRepository<TDbContext, TEntity, TKey>(TDbContext dbContext)
     /// <returns>Найденная сущность или null</returns>
     public virtual Task<TEntity?> GetByIdAsync(
         TKey id,
-        string[]? includeProperties = null,
+        string? includeProperties = null,
         CancellationToken cancellationToken = default)
     {
         IQueryable<TEntity> query = DbSet;
 
-        if (includeProperties != null)
+        if (includeProperties is not null)
         {
-            foreach (var includeProperty in includeProperties)
+            var propertiesArray = includeProperties.Split(", ");
+
+            foreach (var includeProperty in propertiesArray)
             {
                 query = query.Include(includeProperty);
             }
@@ -136,6 +140,5 @@ public class BaseEfRepository<TDbContext, TEntity, TKey>(TDbContext dbContext)
         }
 
         _isDisposed = true;
-        GC.SuppressFinalize(this);
     }
 }

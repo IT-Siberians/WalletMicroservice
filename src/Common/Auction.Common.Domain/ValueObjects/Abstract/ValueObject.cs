@@ -24,8 +24,8 @@ public abstract class ValueObject<T>
     /// <exception cref="ArgumentNullValueException">Если передан null</exception>
     protected ValueObject(T value, Action<T> validator)
     {
-        if (value == null) throw new ArgumentNullValueException(nameof(value));
-        if (validator == null) throw new ArgumentNullValueException(nameof(validator));
+        if (value is null) throw new ArgumentNullValueException(nameof(value));
+        if (validator is null) throw new ArgumentNullValueException(nameof(validator));
 
         validator(value);
 

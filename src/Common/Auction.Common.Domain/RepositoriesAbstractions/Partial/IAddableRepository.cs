@@ -16,5 +16,7 @@ public interface IAddableRepository<TEntity>
     /// <param name="entity">Сущность</param>
     /// <param name="cancellationToken">Токен отмены</param>
     /// <returns>true если сущность добавлена, иначе false</returns>
-    Task<bool> AddAsync(TEntity entity, CancellationToken cancellationToken);
+    Task<bool> AddAsync(
+        TEntity entity,
+        CancellationToken cancellationToken = default);
 }

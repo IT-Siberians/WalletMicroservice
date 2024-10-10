@@ -5,18 +5,24 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Auction.WalletMicroservice.Infrastructure.EntityFramework.Configurations;
 
-public class OwnerConfiguration : IEntityTypeConfiguration<Owner>
+internal class OwnerConfiguration : IEntityTypeConfiguration<Owner>
 {
     public void Configure(EntityTypeBuilder<Owner> builder)
     {
-        builder.Property(o => o.Username)
-            .IsRequired()
-            .HasMaxLength(Username.MaxLength)
-            .HasConversion(
-                name => name.Value,
-                str => new Username(str)
-            );
+        builder.HasKey(o => o.Id);
 
-        builder.HasOne(o => o.Bill).WithOne(b => b.Owner);
+        builder.Ignore(o => o.Balance);
+
+        builder.OwnsOne(
+            o => o.Username,
+            a => a.Property(u => u.Value)
+                .HasColumnName("Username")
+                .HasMaxLength(Username.MaxLength)
+                .IsRequired());
+
+        builder.HasOne(o => o.Bill)
+            .WithOne(b => b.Owner)
+            .HasForeignKey<Owner>(o => o.BillId)
+            .IsRequired();
     }
 }

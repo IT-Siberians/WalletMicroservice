@@ -11,12 +11,12 @@ namespace Auction.Common.Domain.ValueObjects.String;
 public class Title(string value)
     : StringValueObject(value, Validate)
 {
-    public const int MinLength = 10;
-    public const int MaxLength = 100;
+    public const int MinLength = 3;
+    public const int MaxLength = 50;
 
     private static void Validate(string value)
     {
-        if (value == null) throw new TitleNullValueException();
+        if (value is null) throw new TitleNullValueException();
         if (string.IsNullOrWhiteSpace(value)) throw new TitleEmptyValueException(value);
         if (!IsCorrectLength(value)) throw new TitleLengthException(value, MinLength, MaxLength);
 

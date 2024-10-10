@@ -36,20 +36,20 @@ public class BaseMemoryRepository<TEntity, TKey>(IList<TEntity> entities)
     public virtual Task<IEnumerable<TEntity>> GetAsync<TOrderKey>(
         Expression<Func<TEntity, bool>>? filter = null,
         Expression<Func<TEntity, TOrderKey>>? orderKeySelector = null,
-        string[]? _ = null,
+        string? _ = null,
         bool __ = true,
         CancellationToken ___ = default)
     {
         var entities = Entities;
 
-        if (filter != null)
+        if (filter is not null)
         {
             entities = entities
                 .Where(filter.Compile())
                 .ToList();
         }
 
-        if (orderKeySelector != null)
+        if (orderKeySelector is not null)
         {
             entities = entities
                 .OrderBy(orderKeySelector.Compile())
@@ -66,7 +66,7 @@ public class BaseMemoryRepository<TEntity, TKey>(IList<TEntity> entities)
     /// <returns>Найденная сущность или null</returns>
     public virtual Task<TEntity?> GetByIdAsync(
         TKey id,
-        string[]? _ = null,
+        string? _ = null,
         CancellationToken __ = default)
             => Task.FromResult(Entities.FirstOrDefault(x => x.Id.Equals(id)));
 
@@ -97,8 +97,5 @@ public class BaseMemoryRepository<TEntity, TKey>(IList<TEntity> entities)
     public virtual Task SaveChangesAsync(CancellationToken _ = default)
         => Task.CompletedTask;
 
-    public virtual void Dispose()
-    {
-        GC.SuppressFinalize(this);
-    }
+    public virtual void Dispose() { }
 }
