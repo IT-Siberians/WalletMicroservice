@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Auction.Common.Application\Auction.Common.Application.csproj" />
+    <ProjectReference Include="..\..\Common\Auction.Common.Domain\Auction.Common.Domain.csproj" />
+    <ProjectReference Include="..\..\Domain\Auction.WalletMicroservice.Domain\Auction.WalletMicroservice.Domain.csproj" />
+    <ProjectReference Include="..\Auction.WalletMicroservice.Application.Models\Auction.WalletMicroservice.Application.Models.csproj" />
+  </ItemGroup>
+
+</Project>
