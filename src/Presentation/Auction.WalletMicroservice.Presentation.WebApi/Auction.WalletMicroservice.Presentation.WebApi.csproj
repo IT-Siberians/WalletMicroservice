@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.8" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Application\Auction.WalletMicroservice.Application.Models\Auction.WalletMicroservice.Application.Models.csproj" />
+    <ProjectReference Include="..\..\Application\Auction.WalletMicroservice.Application.Services\Auction.WalletMicroservice.Application.Services.csproj" />
+    <ProjectReference Include="..\..\Common\Auction.Common.Application\Auction.Common.Application.csproj" />
+    <ProjectReference Include="..\..\Common\Auction.Common.Domain\Auction.Common.Domain.csproj" />
+    <ProjectReference Include="..\..\Common\Auction.Common.Infrastructure\Auction.Common.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Common\Auction.Common.Presentation\Auction.Common.Presentation.csproj" />
+    <ProjectReference Include="..\..\Domain\Auction.WalletMicroservice.Domain\Auction.WalletMicroservice.Domain.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Auction.WalletMicroservice.Infrastructure.EntityFramework\Auction.WalletMicroservice.Infrastructure.EntityFramework.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Auction.WalletMicroservice.Infrastructure.RepositoriesImplementations\Auction.WalletMicroservice.Infrastructure.RepositoriesImplementations.csproj" />
+  </ItemGroup>
+
+</Project>
