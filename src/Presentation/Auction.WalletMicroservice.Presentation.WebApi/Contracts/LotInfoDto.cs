@@ -2,7 +2,7 @@
 
 namespace Auction.WalletMicroservice.Presentation.WebApi.Contracts;
 
-public record LotInfoRequestData(
+public record LotInfoDto(
     Guid Id,
     string Title,
     string Description);

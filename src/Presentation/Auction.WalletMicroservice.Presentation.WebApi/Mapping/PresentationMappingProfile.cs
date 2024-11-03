@@ -18,7 +18,7 @@ public class PresentationMappingProfile : Profile
         CreateMap<ReserveMoneyRequest, ReserveMoneyModel>();
         CreateMap<RealeaseMoneyRequest, RealeaseMoneyModel>();
         CreateMap<PayForLotRequest, PayForLotModel>();
-        CreateMap<LotInfoRequestData, LotInfoModel>();
+        CreateMap<LotInfoDto, LotInfoModel>();
     }
 }
 

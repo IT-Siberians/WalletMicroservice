@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+	<ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.10.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\L3\Auction.Common.Infrastructure.Initialization\Auction.Common.Infrastructure.Initialization.csproj" />
+    <ProjectReference Include="..\..\Common\L3\Auction.Common.Infrastructure.Repositories\Auction.Common.Infrastructure.Repositories.csproj" />
+    <ProjectReference Include="..\..\Common\L3\Auction.Common.Presentation.Validation\Auction.Common.Presentation.Validation.csproj" />
+    <ProjectReference Include="..\..\L3.Infrastructure\Auction.Wallet.Infrastructure.Repositories\Auction.Wallet.Infrastructure.Repositories.csproj" />
+    <ProjectReference Include="..\..\L3.Presentation\Auction.Wallet.Presentation.Validation\Auction.Wallet.Presentation.Validation.csproj" />
+    <ProjectReference Include="..\..\L3.Presentation\Auction.Wallet.Presentation.WebApi\Auction.Wallet.Presentation.WebApi.csproj" />
+  </ItemGroup>
+
+</Project>

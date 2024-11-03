@@ -11,9 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\Auction.Common.Application\Auction.Common.Application.csproj" />
-    <ProjectReference Include="..\..\Common\Auction.Common.Domain\Auction.Common.Domain.csproj" />
-    <ProjectReference Include="..\..\Domain\Auction.WalletMicroservice.Domain\Auction.WalletMicroservice.Domain.csproj" />
     <ProjectReference Include="..\Auction.WalletMicroservice.Application.Models\Auction.WalletMicroservice.Application.Models.csproj" />
   </ItemGroup>
 

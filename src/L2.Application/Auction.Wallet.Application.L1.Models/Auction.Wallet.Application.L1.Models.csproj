@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\L2\Auction.Common.Application.L1.Models\Auction.Common.Application.L1.Models.csproj" />
+    <ProjectReference Include="..\..\L1.Domain\Auction.Wallet.Domain\Auction.Wallet.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
