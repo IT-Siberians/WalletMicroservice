@@ -3,6 +3,7 @@ using Auction.Common.Application.L2.Interfaces.Handlers;
 using Auction.Common.Presentation.Initialization;
 using Auction.Common.Presentation.Mapping;
 using Auction.Common.Presentation.Validation;
+using Auction.Wallet;
 using Auction.Wallet.Application.L1.Models.Owners;
 using Auction.Wallet.Application.L2.Interfaces.Commands.Owners;
 using Auction.Wallet.Application.L2.Interfaces.Commands.Traiding;
@@ -75,6 +76,8 @@ builder.Services.AddTransient<IQueryHandler<GetWalletBalanceQuery, BalanceModel>
 
 builder.Services.AddTransient<IQueryPageHandler<GetWalletTransactionsQuery, TransactionModel>, GetWalletTransactionsHandler>();
 
+builder.Services.AddTransient<DbInitializer>();
+
 builder.Services.AddAutoMapper(
     typeof(ApplicationMappingProfile),
     typeof(CommonPresentationMappingProfile),
@@ -96,5 +99,10 @@ app.UseAuthorization();
 app.MapControllers();
 
 await app.MigrateAsync<ApplicationDbContext>();
+
+if (app.Environment.IsDevelopment())
+{
+    await app.InitAsync<DbInitializer>();
+}
 
 app.Run();
