@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+	<ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <OutputType>Library</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="FluentValidation" Version="11.10.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\L3\Auction.Common.Presentation.WebApi\Auction.Common.Presentation.WebApi.csproj" />
+    <ProjectReference Include="..\..\L2.Application\Auction.Wallet.Application.L3.Logic\Auction.Wallet.Application.L3.Logic.csproj" />
+  </ItemGroup>
+
+</Project>
