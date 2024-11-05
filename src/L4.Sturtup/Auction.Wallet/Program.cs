@@ -18,7 +18,9 @@ using Auction.Wallet.Presentation.Validation.Traiding;
 using Auction.Wallet.Presentation.WebApi.Mapping;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -78,7 +80,10 @@ builder.Services.AddTransient<IQueryPageHandler<GetWalletTransactionsQuery, Tran
 
 builder.Services.AddTransient<DbInitializer>();
 
-builder.Services.AddHealthChecks();
+builder.Services.AddHealthChecks()
+    .AddNpgSql(dbConnectionString)
+    //.AddRabbitMQ(rabbitConnectionString: rmqConnectionString)
+    .AddDbContextCheck<ApplicationDbContext>();
 
 builder.Services.AddAutoMapper(
     typeof(ApplicationMappingProfile),
@@ -93,7 +98,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.MapHealthChecks("health");
+
+app.MapHealthChecks("health", new HealthCheckOptions
+{
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
 
 app.UseHttpsRedirection();
 

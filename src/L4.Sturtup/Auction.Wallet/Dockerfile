@@ -12,25 +12,10 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["L4.Sturtup/Auction.Wallet/Auction.Wallet.csproj", "L4.Sturtup/Auction.Wallet/"]
-COPY ["Common/L3/Auction.Common.Infrastructure.Initialization/Auction.Common.Infrastructure.Initialization.csproj", "Common/L3/Auction.Common.Infrastructure.Initialization/"]
-COPY ["Common/L3/Auction.Common.Infrastructure.Repositories/Auction.Common.Infrastructure.Repositories.csproj", "Common/L3/Auction.Common.Infrastructure.Repositories/"]
-COPY ["Common/L2/Auction.Common.Application.L2.Interfaces/Auction.Common.Application.L2.Interfaces.csproj", "Common/L2/Auction.Common.Application.L2.Interfaces/"]
-COPY ["Common/L2/Auction.Common.Application.L1.Models/Auction.Common.Application.L1.Models.csproj", "Common/L2/Auction.Common.Application.L1.Models/"]
-COPY ["Common/L1/Auction.Common.Domain/Auction.Common.Domain.csproj", "Common/L1/Auction.Common.Domain/"]
-COPY ["Common/L3/Auction.Common.Presentation.Validation/Auction.Common.Presentation.Validation.csproj", "Common/L3/Auction.Common.Presentation.Validation/"]
-COPY ["L3.Infrastructure/Auction.Wallet.Infrastructure.Repositories/Auction.Wallet.Infrastructure.Repositories.csproj", "L3.Infrastructure/Auction.Wallet.Infrastructure.Repositories/"]
-COPY ["L2.Application/Auction.Wallet.Application.L2.Interfaces/Auction.Wallet.Application.L2.Interfaces.csproj", "L2.Application/Auction.Wallet.Application.L2.Interfaces/"]
-COPY ["L2.Application/Auction.Wallet.Application.L1.Models/Auction.Wallet.Application.L1.Models.csproj", "L2.Application/Auction.Wallet.Application.L1.Models/"]
-COPY ["L1.Domain/Auction.Wallet.Domain/Auction.Wallet.Domain.csproj", "L1.Domain/Auction.Wallet.Domain/"]
-COPY ["L3.Infrastructure/Auction.Wallet.Infrastructure.EntityFramework/Auction.Wallet.Infrastructure.EntityFramework.csproj", "L3.Infrastructure/Auction.Wallet.Infrastructure.EntityFramework/"]
-COPY ["L3.Presentation/Auction.Wallet.Presentation.Validation/Auction.Wallet.Presentation.Validation.csproj", "L3.Presentation/Auction.Wallet.Presentation.Validation/"]
-COPY ["L3.Presentation/Auction.Wallet.Presentation.WebApi/Auction.Wallet.Presentation.WebApi.csproj", "L3.Presentation/Auction.Wallet.Presentation.WebApi/"]
-COPY ["Common/L3/Auction.Common.Presentation.WebApi/Auction.Common.Presentation.WebApi.csproj", "Common/L3/Auction.Common.Presentation.WebApi/"]
-COPY ["Common/L2/Auction.Common.Application.L3.Logic/Auction.Common.Application.L3.Logic.csproj", "Common/L2/Auction.Common.Application.L3.Logic/"]
-COPY ["L2.Application/Auction.Wallet.Application.L3.Logic/Auction.Wallet.Application.L3.Logic.csproj", "L2.Application/Auction.Wallet.Application.L3.Logic/"]
-RUN dotnet restore "./L4.Sturtup/Auction.Wallet/Auction.Wallet.csproj"
+
+# Копируем весь проект в рабочую директорию
 COPY . .
+
 WORKDIR "/src/L4.Sturtup/Auction.Wallet"
 RUN dotnet build "./Auction.Wallet.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
