@@ -5,11 +5,11 @@ using AutoMapper;
 
 namespace Auction.Common.Presentation.Mapping;
 
-public class CommonPresentationMappingProfile : Profile
+public class CommonWebApiMappingProfile : Profile
 {
-    public CommonPresentationMappingProfile()
+    public CommonWebApiMappingProfile()
     {
-        CreateMap<CreatePersonCommandHttp, CreatePersonCommand>();
+        CreateMap<CreatePersonCommandWeb, CreatePersonCommand>();
         CreateMap<IdModel, DeletePersonCommand>();
         CreateMap<IdModel, GetPersonQuery>();
         CreateMap<IdModel, IsPersonCommand>();

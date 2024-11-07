@@ -5,7 +5,7 @@ using Auction.Common.Application.L2.Interfaces.Pages;
 using Auction.Common.Presentation.Controllers;
 using Auction.Wallet.Application.L1.Models.Owners;
 using Auction.Wallet.Application.L2.Interfaces.Commands.Owners;
-using Auction.Wallet.Presentation.WebApi.Contracts;
+using Auction.Wallet.Presentation.WebApi.Contracts.Owner;
 using AutoMapper;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
@@ -29,7 +29,7 @@ public class OwnerController(
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(BadValues))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(BadAnswer))]
     public Task<ActionResult<IAnswer>> PutMoneyInWallet(
-        [FromBody] PutMoneyInWalletCommandHttp command,
+        [FromBody] PutMoneyInWalletCommandWeb command,
         [FromServices] ICommandHandler<PutMoneyInWalletCommand> handler,
         [FromServices] IValidator<PutMoneyInWalletCommand> validator,
         CancellationToken cancellationToken)
@@ -48,7 +48,7 @@ public class OwnerController(
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(BadValues))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(BadAnswer))]
     public Task<ActionResult<IAnswer>> WithdrawMoneyFromWallet(
-        [FromBody] WithdrawMoneyFromWalletCommandHttp command,
+        [FromBody] WithdrawMoneyFromWalletCommandWeb command,
         [FromServices] ICommandHandler<WithdrawMoneyFromWalletCommand> handler,
         [FromServices] IValidator<WithdrawMoneyFromWalletCommand> validator,
         CancellationToken cancellationToken)

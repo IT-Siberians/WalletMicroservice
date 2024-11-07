@@ -1,8 +1,10 @@
 ﻿using Auction.Common.Application.L2.Interfaces.Answers;
 using Auction.Common.Application.L2.Interfaces.Handlers;
+using Auction.Common.Application.L3.Logic.Strings;
 using Auction.Common.Domain.ValueObjects.Numeric;
 using Auction.Wallet.Application.L2.Interfaces.Commands.Owners;
 using Auction.Wallet.Application.L2.Interfaces.Repositories;
+using Auction.Wallet.Application.L3.Logic.Strings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,7 +52,7 @@ public class PutMoneyInWalletHandler(
 
         if (owner is null)
         {
-            return BadAnswer.EntityNotFound($"Не существует пользователь с Id = {command.OwnerId}");
+            return BadAnswer.EntityNotFound(CommonMessages.DoesntExistWithId, Names.User, command.OwnerId);
 
         }
 
@@ -76,6 +78,6 @@ public class PutMoneyInWalletHandler(
         _ownersRepository.Update(owner);
         await _ownersRepository.SaveChangesAsync(cancellationToken);
 
-        return new OkAnswer("Деньги успешно добавлены в кошелёк");
+        return new OkAnswer(WalletMessages.MoneySuccessfullyAddedToWallet);
     }
 }

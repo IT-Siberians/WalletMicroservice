@@ -2,6 +2,7 @@
 using Auction.Common.Application.L2.Interfaces.Answers;
 using Auction.Common.Application.L2.Interfaces.Handlers;
 using Auction.Common.Application.L2.Interfaces.Repositories.Base;
+using Auction.Common.Application.L3.Logic.Strings;
 using Auction.Common.Domain.Entities;
 using System;
 using System.Threading;
@@ -44,9 +45,9 @@ public class IsHandler<TCommand, TEntity, TEntityRepository>(
 
         if (entity is null)
         {
-            return BadAnswer.EntityNotFound($"Не существует {_entityName} с Id = {command.Id}");
+            return BadAnswer.EntityNotFound(CommonMessages.DoesntExistWithId, _entityName, command.Id);
         }
 
-        return new OkAnswer($"Существует {_entityName} с Id = {command.Id}");
+        return new OkAnswer(CommonMessages.ExistsWithId, _entityName, command.Id);
     }
 }

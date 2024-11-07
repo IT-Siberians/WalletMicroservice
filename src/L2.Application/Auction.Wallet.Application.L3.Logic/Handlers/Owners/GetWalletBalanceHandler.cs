@@ -1,5 +1,6 @@
 ﻿using Auction.Common.Application.L2.Interfaces.Answers;
 using Auction.Common.Application.L2.Interfaces.Handlers;
+using Auction.Common.Application.L3.Logic.Strings;
 using Auction.Wallet.Application.L1.Models.Owners;
 using Auction.Wallet.Application.L2.Interfaces.Commands.Owners;
 using Auction.Wallet.Application.L2.Interfaces.Repositories;
@@ -39,7 +40,7 @@ public class GetWalletBalanceHandler(
 
         if (owner is null)
         {
-            return BadAnswer<BalanceModel>.EntityNotFound($"Не существует пользователь с Id = {query.OwnerId}");
+            return BadAnswer<BalanceModel>.EntityNotFound(CommonMessages.DoesntExistWithId, Names.User, query.OwnerId);
         }
 
         var balance = new BalanceModel(

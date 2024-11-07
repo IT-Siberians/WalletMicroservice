@@ -2,6 +2,6 @@
 
 namespace Auction.Common.Presentation.Contracts;
 
-public record CreatePersonCommandHttp(
+public record CreatePersonCommandWeb(
     Guid Id,
     string Username);

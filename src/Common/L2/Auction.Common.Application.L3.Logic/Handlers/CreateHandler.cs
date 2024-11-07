@@ -2,6 +2,7 @@
 using Auction.Common.Application.L2.Interfaces.Answers;
 using Auction.Common.Application.L2.Interfaces.Handlers;
 using Auction.Common.Application.L2.Interfaces.Repositories.Base;
+using Auction.Common.Application.L3.Logic.Strings;
 using Auction.Common.Domain.Entities;
 using AutoMapper;
 using System;
@@ -43,7 +44,7 @@ public class CreateHandler<TCommand, TEntity, TEntityRepository>(
         var existingEntity = await _repository.GetByIdAsync(command.Id, cancellationToken: cancellationToken);
         if (existingEntity is not null)
         {
-            return BadAnswer.Error($"Уже существует {_entityName} с Id = {command.Id}");
+            return BadAnswer.Error(CommonMessages.AlreadyExistsWithId, _entityName, command.Id);
         }
 
         var newEntity = _mapper.Map<TEntity>(command);
@@ -51,6 +52,6 @@ public class CreateHandler<TCommand, TEntity, TEntityRepository>(
         await _repository.AddAsync(newEntity, cancellationToken);
         await _repository.SaveChangesAsync(cancellationToken);
 
-        return new OkAnswer($"Создан {_entityName} с Id = {command.Id}");
+        return new OkAnswer(CommonMessages.CreatedWithId, _entityName, command.Id);
     }
 }

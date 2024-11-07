@@ -2,6 +2,7 @@
 using Auction.Common.Application.L2.Interfaces.Answers;
 using Auction.Common.Application.L2.Interfaces.Handlers;
 using Auction.Common.Application.L2.Interfaces.Pages;
+using Auction.Common.Application.L3.Logic.Strings;
 using Auction.Wallet.Application.L1.Models.Owners;
 using Auction.Wallet.Application.L2.Interfaces.Commands.Owners;
 using Auction.Wallet.Application.L2.Interfaces.Repositories;
@@ -48,12 +49,12 @@ public class GetWalletTransactionsHandler(
         var owner = await _ownersRepository.GetByIdAsync(query.OwnerId, cancellationToken: cancellationToken);
         if (owner is null)
         {
-            return BadAnswer<IPageOf<TransactionModel>>.EntityNotFound($"Не существует пользователь с Id = {query.OwnerId}");
+            return BadAnswer<IPageOf<TransactionModel>>.EntityNotFound(CommonMessages.DoesntExistWithId, Names.User, query.OwnerId);
         }
 
         var freezings = (await _freezingsRepository
             .GetAsync(
-                includeProperties: "Bill.Owner",
+                includeProperties: "Bill.Owner, Lot",
                 filter: e => e.Bill.Owner.Id == query.OwnerId,
                 orderKeySelector: e => e.DateTime,
                 cancellationToken: cancellationToken))
@@ -71,13 +72,13 @@ public class GetWalletTransactionsHandler(
                     freezingMoney,
                     e.DateTime,
                     type,
-                    null);
+                    _mapper.Map<LotInfoModel>(e.Lot));
             })
             .ToArray();
 
         var transfers = (await _transfersRepository
             .GetAsync(
-                includeProperties: "FromBill.Owner, ToBill.Owner",
+                includeProperties: "FromBill.Owner, ToBill.Owner, Lot",
                 filter: e => e.FromBill != null && e.FromBill.Owner.Id == query.OwnerId
                             || e.ToBill != null && e.ToBill.Owner.Id == query.OwnerId,
                 orderKeySelector: e => e.DateTime,
@@ -101,7 +102,7 @@ public class GetWalletTransactionsHandler(
                     null,
                     e.DateTime,
                     type,
-                    _mapper.Map<LotInfoModel>(e.Lot));
+                    e.Lot is null ? null : _mapper.Map<LotInfoModel>(e.Lot));
             })
             .ToArray();
 

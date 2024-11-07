@@ -1,9 +1,11 @@
 ﻿using Auction.Common.Application.L2.Interfaces.Answers;
 using Auction.Common.Application.L2.Interfaces.Handlers;
+using Auction.Common.Application.L3.Logic.Strings;
 using Auction.Common.Domain.ValueObjects.Numeric;
 using Auction.Common.Domain.ValueObjects.String;
 using Auction.Wallet.Application.L2.Interfaces.Commands.Traiding;
 using Auction.Wallet.Application.L2.Interfaces.Repositories;
+using Auction.Wallet.Application.L3.Logic.Strings;
 using Auction.WalletMicroservice.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -52,7 +54,7 @@ public class ReserveMoneyHandler(
 
         if (buyer is null)
         {
-            return BadAnswer.EntityNotFound($"Не существует покупатель с Id = {command.BuyerId}");
+            return BadAnswer.EntityNotFound(CommonMessages.DoesntExistWithId, Names.Buyer, command.BuyerId);
         }
 
         var lot = await _lotsRepository.GetByIdAsync(command.Lot.Id, cancellationToken: cancellationToken);
@@ -72,7 +74,7 @@ public class ReserveMoneyHandler(
 
         if (!buyer.ReserveMoney(price, lot))
         {
-            return BadAnswer.Error("На счёте недостаточно свободных денег");
+            return BadAnswer.Error(WalletMessages.ThereIsNotEnoughFreeMoneyInBill);
         }
 
         var resultFreezings = buyer.Bill.Freezings;
@@ -91,6 +93,6 @@ public class ReserveMoneyHandler(
 
         await _ownersRepository.SaveChangesAsync(cancellationToken);
 
-        return new OkAnswer("Деньги успешно зарезервированы");
+        return new OkAnswer(WalletMessages.MoneySuccessfullyReserved);
     }
 }

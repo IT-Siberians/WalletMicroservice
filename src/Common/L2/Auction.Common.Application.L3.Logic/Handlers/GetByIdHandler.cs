@@ -2,6 +2,7 @@
 using Auction.Common.Application.L2.Interfaces.Answers;
 using Auction.Common.Application.L2.Interfaces.Handlers;
 using Auction.Common.Application.L2.Interfaces.Repositories.Base;
+using Auction.Common.Application.L3.Logic.Strings;
 using Auction.Common.Domain.Entities;
 using System;
 using System.Threading;
@@ -49,7 +50,7 @@ public class GetByIdHandler<TQuery, TEntity, TModel, TEntityRepository>(
 
         if (entity is null)
         {
-            return BadAnswer<TModel>.EntityNotFound($"Не существует {_entityName} с Id = {query.Id}");
+            return BadAnswer<TModel>.EntityNotFound(CommonMessages.DoesntExistWithId, _entityName, query.Id);
         }
 
         var model = toModel(entity);

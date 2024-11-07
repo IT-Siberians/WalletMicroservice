@@ -1,8 +1,10 @@
 ﻿using Auction.Common.Application.L2.Interfaces.Answers;
 using Auction.Common.Application.L2.Interfaces.Handlers;
+using Auction.Common.Application.L3.Logic.Strings;
 using Auction.Common.Domain.ValueObjects.Numeric;
 using Auction.Wallet.Application.L2.Interfaces.Commands.Traiding;
 using Auction.Wallet.Application.L2.Interfaces.Repositories;
+using Auction.Wallet.Application.L3.Logic.Strings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,12 +52,12 @@ public class PayForLotHandler(
 
         if (command.SellerId == command.BuyerId)
         {
-            return BadAnswer.Error($"Id покупателя и продавца не может совпадать ({command.SellerId})");
+            return BadAnswer.Error(WalletMessages.BuyerAndSellerIdsCannotMatch, command.SellerId);
         }
 
         if (buyer is null)
         {
-            return BadAnswer.EntityNotFound($"Не существует покупатель с Id = {command.BuyerId}");
+            return BadAnswer.EntityNotFound(CommonMessages.DoesntExistWithId, Names.Buyer, command.BuyerId);
         }
 
         var seller = await _ownersRepository.GetByIdAsync(
@@ -65,27 +67,27 @@ public class PayForLotHandler(
 
         if (seller is null)
         {
-            return BadAnswer.EntityNotFound($"Не существует продавец с Id = {command.SellerId}");
+            return BadAnswer.EntityNotFound(CommonMessages.DoesntExistWithId, Names.Seller, command.SellerId);
         }
 
         var lot = await _lotsRepository.GetByIdAsync(command.LotId, cancellationToken: cancellationToken);
         if (lot is null)
         {
-            return BadAnswer.EntityNotFound($"Не существует лот с Id = {command.LotId}");
+            return BadAnswer.EntityNotFound(CommonMessages.DoesntExistWithId, Names.Lot, command.LotId);
         }
 
         var price = new Price(command.HammerPrice);
 
         if (!buyer.HasFrozenMoney(price))
         {
-            return BadAnswer.Error("Зарезервировано недостаточно средств");
+            return BadAnswer.Error(WalletMessages.NotEnoughMoneyReserved);
         }
 
         var initialTransfers = buyer.Bill.TransfersFrom;
 
         if (!buyer.PayForLot(price, seller, lot))
         {
-            return BadAnswer.Error("Не удалось оплатить лот");
+            return BadAnswer.Error(WalletMessages.FailedToPayForLot);
         }
 
         var resultTransfers = buyer.Bill.TransfersFrom;
@@ -104,6 +106,6 @@ public class PayForLotHandler(
 
         await _ownersRepository.SaveChangesAsync(cancellationToken);
 
-        return new OkAnswer("Оплата лота прошла успешно");
+        return new OkAnswer(WalletMessages.PaymentForLotWasSuccessful);
     }
 }

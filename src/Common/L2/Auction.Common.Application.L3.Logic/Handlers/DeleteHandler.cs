@@ -3,6 +3,7 @@ using Auction.Common.Application.L2.Interfaces.Answers;
 using Auction.Common.Application.L2.Interfaces.Handlers;
 using Auction.Common.Application.L2.Interfaces.Repositories.Base;
 using Auction.Common.Application.L2.Interfaces.Repositories.Partial;
+using Auction.Common.Application.L3.Logic.Strings;
 using Auction.Common.Domain.Entities;
 using System;
 using System.Threading;
@@ -41,12 +42,12 @@ public class DeleteHandler<TCommand, TEntity, TEntityRepository>(
         var existingEntity = await _repository.GetByIdAsync(command.Id, cancellationToken: cancellationToken);
         if (existingEntity is null)
         {
-            return BadAnswer.EntityNotFound($"Не существует {_entityName} с Id = {command.Id}");
+            return BadAnswer.EntityNotFound(CommonMessages.DoesntExistWithId, _entityName, command.Id);
         }
 
         _repository.Delete(existingEntity);
         await _repository.SaveChangesAsync(cancellationToken);
 
-        return new OkAnswer($"Удалён {_entityName} с Id = {command.Id}");
+        return new OkAnswer(CommonMessages.DeletedWithId, _entityName, command.Id);
     }
 }

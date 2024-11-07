@@ -27,7 +27,7 @@ public class DbInitializer(ApplicationDbContext dbContext) : IDbInitializer
     public async Task InitDatabaseAsync()
     {
         const string person1IdString = "11111111-5717-4562-b3fc-111100001111";
-        Guid person1Id = new Guid(person1IdString);
+        Guid person1Id = new(person1IdString);
 
         if (_dbContext.Owners.Any(p => p.Id == person1Id))
         {
@@ -44,28 +44,28 @@ public class DbInitializer(ApplicationDbContext dbContext) : IDbInitializer
         var owner3 = await _dbContext.CreateOwnerAsync("CarinC", "11111111-5717-4562-b3fc-111100003333");
         var owner4 = await _dbContext.CreateOwnerAsync("DenisD", "11111111-5717-4562-b3fc-111100004444");
 
-        var lot1 = await _dbContext.CreateLotAsync(
+        _ = await _dbContext.CreateLotAsync(
                 title: "Первый невыкупленный лот",
                 description: "Описание лота",
                 guid: "22222222-5717-4562-b3fc-222200001111");
-        var lot2 = await _dbContext.CreateLotAsync(
+        _ = await _dbContext.CreateLotAsync(
                 title: "Второй невыкупленный лот",
                 description: "Описание лота",
                 guid: "22222222-5717-4562-b3fc-222200002222");
-        var lot3 = await _dbContext.CreateLotAsync(
+        _ = await _dbContext.CreateLotAsync(
                 title: "Третий невыкупленный лот",
                 description: "Описание лота",
                 guid: "22222222-5717-4562-b3fc-222200003333");
-        var lot4 = await _dbContext.CreateLotAsync(
+        _ = await _dbContext.CreateLotAsync(
                 title: "Четвёртый невыкупленный лот",
                 description: "Описание лота",
                 guid: "22222222-5717-4562-b3fc-222200004444");
 
-        var lot5 = await _dbContext.CreateLotAsync(
+        _ = await _dbContext.CreateLotAsync(
                 title: "Отменённый лот 1го продавца",
                 description: "Описание лота",
                 guid: "22222222-5717-4562-b3fc-222200005555");
-        var lot6 = await _dbContext.CreateLotAsync(
+        _ = await _dbContext.CreateLotAsync(
                 title: "Отменённый лот 4го продавца",
                 description: "Описание лота",
                 guid: "22222222-5717-4562-b3fc-222200006666");

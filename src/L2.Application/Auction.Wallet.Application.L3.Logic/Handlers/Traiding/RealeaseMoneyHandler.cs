@@ -1,8 +1,10 @@
 ﻿using Auction.Common.Application.L2.Interfaces.Answers;
 using Auction.Common.Application.L2.Interfaces.Handlers;
+using Auction.Common.Application.L3.Logic.Strings;
 using Auction.Common.Domain.ValueObjects.Numeric;
 using Auction.Wallet.Application.L2.Interfaces.Commands.Traiding;
 using Auction.Wallet.Application.L2.Interfaces.Repositories;
+using Auction.Wallet.Application.L3.Logic.Strings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,13 +52,13 @@ public class RealeaseMoneyHandler(
 
         if (buyer is null)
         {
-            return BadAnswer.EntityNotFound($"Не существует покупатель с Id = {command.BuyerId}");
+            return BadAnswer.EntityNotFound(CommonMessages.DoesntExistWithId, Names.Buyer, command.BuyerId);
         }
 
         var lot = await _lotsRepository.GetByIdAsync(command.LotId, cancellationToken: cancellationToken);
         if (lot is null)
         {
-            return BadAnswer.EntityNotFound($"Не существует лот с Id = {command.LotId}");
+            return BadAnswer.EntityNotFound(CommonMessages.DoesntExistWithId, Names.Lot, command.LotId);
         }
 
         var price = new Price(command.Price);
@@ -64,7 +66,7 @@ public class RealeaseMoneyHandler(
 
         if (!buyer.RealeaseMoney(price, lot))
         {
-            return BadAnswer.Error("На счёте недостаточно зарезервированных денег");
+            return BadAnswer.Error(WalletMessages.ThereIsNotEnoughReservedMoneyInBill);
         }
 
         var resultFreezings = buyer.Bill.Freezings;
@@ -83,6 +85,6 @@ public class RealeaseMoneyHandler(
 
         await _ownersRepository.SaveChangesAsync(cancellationToken);
 
-        return new OkAnswer("Деньги успешно разморожены");
+        return new OkAnswer(WalletMessages.MoneySuccessfullyUnfrozen);
     }
 }

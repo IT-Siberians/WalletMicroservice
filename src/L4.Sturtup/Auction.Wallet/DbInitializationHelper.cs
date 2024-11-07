@@ -62,7 +62,7 @@ public static class DbInitializationHelper
         decimal priceValue)
     {
         var price = new Price(priceValue);
-        var transer = new Transfer(Guid.NewGuid(), price, buyer.Bill, seller.Bill);
+        var transer = new Transfer(Guid.NewGuid(), price, buyer.Bill, seller.Bill, lot);
         buyer.Bill.PayForLot(price);
         seller.Bill.PutMoney(price);
         await dbContext.Transfers.AddAsync(transer);

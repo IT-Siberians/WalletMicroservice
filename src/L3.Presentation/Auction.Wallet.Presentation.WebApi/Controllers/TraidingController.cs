@@ -2,7 +2,7 @@
 using Auction.Common.Application.L2.Interfaces.Handlers;
 using Auction.Common.Presentation.Controllers;
 using Auction.Wallet.Application.L2.Interfaces.Commands.Traiding;
-using Auction.Wallet.Presentation.WebApi.Contracts;
+using Auction.Wallet.Presentation.WebApi.Contracts.Traiding;
 using AutoMapper;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
@@ -26,7 +26,7 @@ public class TraidingController(
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(BadValues))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(BadAnswer))]
     public Task<ActionResult<IAnswer>> PayForLot(
-        [FromBody] PayForLotCommandHttp command,
+        [FromBody] PayForLotCommandWeb command,
         [FromServices] ICommandHandler<PayForLotCommand> handler,
         [FromServices] IValidator<PayForLotCommand> validator,
         CancellationToken cancellationToken)
@@ -45,7 +45,7 @@ public class TraidingController(
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(BadValues))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(BadAnswer))]
     public Task<ActionResult<IAnswer>> RealeaseMoney(
-        [FromBody] RealeaseMoneyCommandHttp command,
+        [FromBody] RealeaseMoneyCommandWeb command,
         [FromServices] ICommandHandler<RealeaseMoneyCommand> handler,
         [FromServices] IValidator<RealeaseMoneyCommand> validator,
         CancellationToken cancellationToken)
@@ -64,7 +64,7 @@ public class TraidingController(
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(BadValues))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(BadAnswer))]
     public Task<ActionResult<IAnswer>> ReserveMoney(
-        [FromBody] ReserveMoneyCommandHttp command,
+        [FromBody] ReserveMoneyCommandWeb command,
         [FromServices] ICommandHandler<ReserveMoneyCommand> handler,
         [FromServices] IValidator<ReserveMoneyCommand> validator,
         CancellationToken cancellationToken)

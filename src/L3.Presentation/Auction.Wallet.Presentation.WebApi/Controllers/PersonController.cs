@@ -6,4 +6,4 @@ using AutoMapper;
 namespace Auction.Wallet.Presentation.WebApi.Controllers;
 
 public class PersonController(IMapper mapper)
-        : CreateDeleteApiController<CreatePersonCommandHttp, CreatePersonCommand, DeletePersonCommand>(mapper);
+        : CreateDeleteApiController<CreatePersonCommandWeb, CreatePersonCommand, DeletePersonCommand>(mapper);
