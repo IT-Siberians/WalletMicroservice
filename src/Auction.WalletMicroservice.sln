@@ -61,6 +61,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auction.Wallet.Domain", "L1
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{D8F3F5F4-0AA9-4886-8F03-239698D52B3F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auction.Wallet.Presentation.GrpcApi", "L3.Presentation\Auction.Wallet.Presentation.GrpcApi\Auction.Wallet.Presentation.GrpcApi.csproj", "{890B31BF-E2EB-4829-97CE-42841E8D08E9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -139,6 +141,10 @@ Global
 		{D8F3F5F4-0AA9-4886-8F03-239698D52B3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8F3F5F4-0AA9-4886-8F03-239698D52B3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8F3F5F4-0AA9-4886-8F03-239698D52B3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{890B31BF-E2EB-4829-97CE-42841E8D08E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{890B31BF-E2EB-4829-97CE-42841E8D08E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{890B31BF-E2EB-4829-97CE-42841E8D08E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{890B31BF-E2EB-4829-97CE-42841E8D08E9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -166,6 +172,7 @@ Global
 		{138F7DDE-D5F4-48F5-834A-3907C2410CDC} = {48EE92FE-221C-4D75-BC52-17E6A4009FE3}
 		{A0EF2592-3F6D-47DD-BC95-2BD5AA68C9BC} = {B99EE3FA-3449-4690-99F6-864F31F6B6FD}
 		{41E82485-6C0C-475B-AE12-21C687B938C3} = {5909C2D7-4010-47D1-A16D-90BA97B84C65}
+		{890B31BF-E2EB-4829-97CE-42841E8D08E9} = {B99EE3FA-3449-4690-99F6-864F31F6B6FD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {64863294-4771-4C70-A6CB-C8908245E066}

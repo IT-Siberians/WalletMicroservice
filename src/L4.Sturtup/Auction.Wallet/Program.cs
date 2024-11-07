@@ -14,6 +14,7 @@ using Auction.Wallet.Application.L3.Logic.Handlers.Traiding;
 using Auction.Wallet.Application.L3.Logic.Mapping;
 using Auction.Wallet.Infrastructure.EntityFramework;
 using Auction.Wallet.Infrastructure.Repositories.EntityFramework;
+using Auction.Wallet.Presentation.GrpcApi.Services;
 using Auction.Wallet.Presentation.Validation.Traiding;
 using Auction.Wallet.Presentation.WebApi.Mapping;
 using FluentValidation;
@@ -90,7 +91,13 @@ builder.Services.AddAutoMapper(
     typeof(CommonWebApiMappingProfile),
     typeof(WebApiMappingProfile));
 
+builder.Services.AddGrpc();
+
 var app = builder.Build();
+
+// Configure the HTTP request pipeline
+app.MapGrpcService<TraidingService>();
+app.MapGet("/", () => "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
