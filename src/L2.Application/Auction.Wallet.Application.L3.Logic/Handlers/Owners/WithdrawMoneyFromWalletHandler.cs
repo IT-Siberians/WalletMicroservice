@@ -1,6 +1,6 @@
 ﻿using Auction.Common.Application.L2.Interfaces.Answers;
 using Auction.Common.Application.L2.Interfaces.Handlers;
-using Auction.Common.Application.L3.Logic.Strings;
+using Auction.Common.Application.L2.Interfaces.Strings;
 using Auction.Common.Domain.ValueObjects.Numeric;
 using Auction.Wallet.Application.L2.Interfaces.Commands.Owners;
 using Auction.Wallet.Application.L2.Interfaces.Repositories;
@@ -52,7 +52,7 @@ public class WithdrawMoneyFromWalletHandler(
 
         if (owner is null)
         {
-            return BadAnswer.EntityNotFound(CommonMessages.DoesntExistWithId, Names.User, command.OwnerId);
+            return BadAnswer.EntityNotFound(CommonMessages.DoesntExistWithId, CommonNames.User, command.OwnerId);
         }
 
         var money = new Money(command.Money);

@@ -1,7 +1,7 @@
 ﻿using Auction.Common.Application.L1.Models;
 using Auction.Common.Application.L2.Interfaces.Commands;
+using Auction.Common.Application.L2.Interfaces.Strings;
 using Auction.Common.Application.L3.Logic.Handlers;
-using Auction.Common.Application.L3.Logic.Strings;
 using Auction.Wallet.Application.L2.Interfaces.Repositories;
 using Auction.WalletMicroservice.Domain.Entities;
 using AutoMapper;
@@ -12,7 +12,7 @@ public class GetPersonHandler(
     IOwnersRepository repository,
     IMapper mapper)
         : GetByIdHandler<GetPersonQuery, Owner, PersonInfoModel, IOwnersRepository>(
-            Names.User,
+            CommonNames.User,
             repository,
             toModel: e => mapper.Map<PersonInfoModel>(e),
             includeProperties: null,

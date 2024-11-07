@@ -1,6 +1,6 @@
 ﻿using Auction.Common.Application.L2.Interfaces.Answers;
 using Auction.Common.Application.L2.Interfaces.Handlers;
-using Auction.Common.Application.L3.Logic.Strings;
+using Auction.Common.Application.L2.Interfaces.Strings;
 using Auction.Common.Domain.ValueObjects.Numeric;
 using Auction.Wallet.Application.L2.Interfaces.Commands.Traiding;
 using Auction.Wallet.Application.L2.Interfaces.Repositories;
@@ -57,7 +57,7 @@ public class PayForLotHandler(
 
         if (buyer is null)
         {
-            return BadAnswer.EntityNotFound(CommonMessages.DoesntExistWithId, Names.Buyer, command.BuyerId);
+            return BadAnswer.EntityNotFound(CommonMessages.DoesntExistWithId, CommonNames.Buyer, command.BuyerId);
         }
 
         var seller = await _ownersRepository.GetByIdAsync(
@@ -67,13 +67,13 @@ public class PayForLotHandler(
 
         if (seller is null)
         {
-            return BadAnswer.EntityNotFound(CommonMessages.DoesntExistWithId, Names.Seller, command.SellerId);
+            return BadAnswer.EntityNotFound(CommonMessages.DoesntExistWithId, CommonNames.Seller, command.SellerId);
         }
 
         var lot = await _lotsRepository.GetByIdAsync(command.LotId, cancellationToken: cancellationToken);
         if (lot is null)
         {
-            return BadAnswer.EntityNotFound(CommonMessages.DoesntExistWithId, Names.Lot, command.LotId);
+            return BadAnswer.EntityNotFound(CommonMessages.DoesntExistWithId, CommonNames.Lot, command.LotId);
         }
 
         var price = new Price(command.HammerPrice);

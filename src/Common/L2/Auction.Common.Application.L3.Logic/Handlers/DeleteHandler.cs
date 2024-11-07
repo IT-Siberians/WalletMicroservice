@@ -3,7 +3,7 @@ using Auction.Common.Application.L2.Interfaces.Answers;
 using Auction.Common.Application.L2.Interfaces.Handlers;
 using Auction.Common.Application.L2.Interfaces.Repositories.Base;
 using Auction.Common.Application.L2.Interfaces.Repositories.Partial;
-using Auction.Common.Application.L3.Logic.Strings;
+using Auction.Common.Application.L2.Interfaces.Strings;
 using Auction.Common.Domain.Entities;
 using System;
 using System.Threading;

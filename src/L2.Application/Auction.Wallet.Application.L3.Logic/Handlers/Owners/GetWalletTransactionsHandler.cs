@@ -2,7 +2,7 @@
 using Auction.Common.Application.L2.Interfaces.Answers;
 using Auction.Common.Application.L2.Interfaces.Handlers;
 using Auction.Common.Application.L2.Interfaces.Pages;
-using Auction.Common.Application.L3.Logic.Strings;
+using Auction.Common.Application.L2.Interfaces.Strings;
 using Auction.Wallet.Application.L1.Models.Owners;
 using Auction.Wallet.Application.L2.Interfaces.Commands.Owners;
 using Auction.Wallet.Application.L2.Interfaces.Repositories;
@@ -49,7 +49,7 @@ public class GetWalletTransactionsHandler(
         var owner = await _ownersRepository.GetByIdAsync(query.OwnerId, cancellationToken: cancellationToken);
         if (owner is null)
         {
-            return BadAnswer<IPageOf<TransactionModel>>.EntityNotFound(CommonMessages.DoesntExistWithId, Names.User, query.OwnerId);
+            return BadAnswer<IPageOf<TransactionModel>>.EntityNotFound(CommonMessages.DoesntExistWithId, CommonNames.User, query.OwnerId);
         }
 
         var freezings = (await _freezingsRepository

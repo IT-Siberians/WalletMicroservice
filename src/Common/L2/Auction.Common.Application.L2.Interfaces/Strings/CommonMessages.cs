@@ -1,4 +1,4 @@
-﻿namespace Auction.Common.Application.L3.Logic.Strings;
+﻿namespace Auction.Common.Application.L2.Interfaces.Strings;
 
 public static class CommonMessages
 {
