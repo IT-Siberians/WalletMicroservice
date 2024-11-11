@@ -17,6 +17,8 @@
     <PackageReference Include="FluentValidation" Version="11.10.0" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.66.0" />
+    <PackageReference Include="MassTransit" Version="8.3.1" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.3.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -33,6 +35,7 @@
     <ProjectReference Include="..\..\L3.Infrastructure\Auction.Wallet.Infrastructure.DbInitialization\Auction.Wallet.Infrastructure.DbInitialization.csproj" />
     <ProjectReference Include="..\..\L3.Infrastructure\Auction.Wallet.Infrastructure.Repositories\Auction.Wallet.Infrastructure.Repositories.csproj" />
     <ProjectReference Include="..\..\L3.Presentation\Auction.Wallet.Presentation.GrpcApi\Auction.Wallet.Presentation.GrpcApi.csproj" />
+    <ProjectReference Include="..\..\L3.Presentation\Auction.Wallet.Presentation.MassTransit\Auction.Wallet.Presentation.MassTransit.csproj" />
     <ProjectReference Include="..\..\L3.Presentation\Auction.Wallet.Presentation.Validation\Auction.Wallet.Presentation.Validation.csproj" />
     <ProjectReference Include="..\..\L3.Presentation\Auction.Wallet.Presentation.WebApi\Auction.Wallet.Presentation.WebApi.csproj" />
   </ItemGroup>

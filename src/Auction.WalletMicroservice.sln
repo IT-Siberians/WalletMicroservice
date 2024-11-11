@@ -61,9 +61,11 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auction.Wallet.Presentation.GrpcApi", "L3.Presentation\Auction.Wallet.Presentation.GrpcApi\Auction.Wallet.Presentation.GrpcApi.csproj", "{890B31BF-E2EB-4829-97CE-42841E8D08E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auction.Common.Infrastructure.DbInitialization", "Common\L3\Auction.Common.Infrastructure.DbInitialization\Auction.Common.Infrastructure.DbInitialization.csproj", "{30A1CC93-4569-4612-83DC-BDD15DA69DFC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auction.Common.Infrastructure.DbInitialization", "Common\L3\Auction.Common.Infrastructure.DbInitialization\Auction.Common.Infrastructure.DbInitialization.csproj", "{30A1CC93-4569-4612-83DC-BDD15DA69DFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auction.Wallet.Infrastructure.DbInitialization", "L3.Infrastructure\Auction.Wallet.Infrastructure.DbInitialization\Auction.Wallet.Infrastructure.DbInitialization.csproj", "{8DAA364F-B3FE-494C-AFDA-90622E97A8F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auction.Wallet.Infrastructure.DbInitialization", "L3.Infrastructure\Auction.Wallet.Infrastructure.DbInitialization\Auction.Wallet.Infrastructure.DbInitialization.csproj", "{8DAA364F-B3FE-494C-AFDA-90622E97A8F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auction.Wallet.Presentation.MassTransit", "L3.Presentation\Auction.Wallet.Presentation.MassTransit\Auction.Wallet.Presentation.MassTransit.csproj", "{36B55427-A110-4719-8BD5-1C414D62E00A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -151,6 +153,10 @@ Global
 		{8DAA364F-B3FE-494C-AFDA-90622E97A8F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DAA364F-B3FE-494C-AFDA-90622E97A8F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DAA364F-B3FE-494C-AFDA-90622E97A8F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36B55427-A110-4719-8BD5-1C414D62E00A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36B55427-A110-4719-8BD5-1C414D62E00A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36B55427-A110-4719-8BD5-1C414D62E00A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36B55427-A110-4719-8BD5-1C414D62E00A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -180,6 +186,7 @@ Global
 		{890B31BF-E2EB-4829-97CE-42841E8D08E9} = {B99EE3FA-3449-4690-99F6-864F31F6B6FD}
 		{30A1CC93-4569-4612-83DC-BDD15DA69DFC} = {2DC300EB-51F9-48EE-BD14-7AEFEC406DDE}
 		{8DAA364F-B3FE-494C-AFDA-90622E97A8F6} = {2A12938A-76C6-4361-A35A-694D280E8451}
+		{36B55427-A110-4719-8BD5-1C414D62E00A} = {B99EE3FA-3449-4690-99F6-864F31F6B6FD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {64863294-4771-4C70-A6CB-C8908245E066}
