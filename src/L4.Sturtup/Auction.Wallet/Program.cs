@@ -1,9 +1,8 @@
 using Auction.Common.Application.L2.Interfaces.Commands;
 using Auction.Common.Application.L2.Interfaces.Handlers;
-using Auction.Common.Presentation.Initialization;
+using Auction.Common.Infrastructure.DbInitialization;
 using Auction.Common.Presentation.Mapping;
 using Auction.Common.Presentation.Validation;
-using Auction.Wallet;
 using Auction.Wallet.Application.L1.Models.Owners;
 using Auction.Wallet.Application.L2.Interfaces.Commands.Owners;
 using Auction.Wallet.Application.L2.Interfaces.Commands.Traiding;
@@ -12,6 +11,7 @@ using Auction.Wallet.Application.L3.Logic.Handlers.Owners;
 using Auction.Wallet.Application.L3.Logic.Handlers.Persons;
 using Auction.Wallet.Application.L3.Logic.Handlers.Traiding;
 using Auction.Wallet.Application.L3.Logic.Mapping;
+using Auction.Wallet.Infrastructure.DbInitialization;
 using Auction.Wallet.Infrastructure.EntityFramework;
 using Auction.Wallet.Infrastructure.Repositories.EntityFramework;
 using Auction.Wallet.Presentation.GrpcApi.Services;

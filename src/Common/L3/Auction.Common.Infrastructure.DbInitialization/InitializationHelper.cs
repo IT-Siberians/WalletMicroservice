@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Hosting;
 using System.Threading.Tasks;
 
-namespace Auction.Common.Presentation.Initialization;
+namespace Auction.Common.Infrastructure.DbInitialization;
 
 public static class InitializationHelper
 {

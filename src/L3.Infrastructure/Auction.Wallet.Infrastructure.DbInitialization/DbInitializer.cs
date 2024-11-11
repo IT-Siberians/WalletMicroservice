@@ -1,10 +1,10 @@
-﻿using Auction.Common.Presentation.Initialization;
+﻿using Auction.Common.Infrastructure.DbInitialization;
 using Auction.Wallet.Infrastructure.EntityFramework;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Auction.Wallet;
+namespace Auction.Wallet.Infrastructure.DbInitialization;
 
 public class DbInitializer(ApplicationDbContext dbContext) : IDbInitializer
 {

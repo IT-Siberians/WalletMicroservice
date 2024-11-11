@@ -28,9 +28,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\L3\Auction.Common.Infrastructure.Initialization\Auction.Common.Infrastructure.Initialization.csproj" />
     <ProjectReference Include="..\..\Common\L3\Auction.Common.Infrastructure.Repositories\Auction.Common.Infrastructure.Repositories.csproj" />
     <ProjectReference Include="..\..\Common\L3\Auction.Common.Presentation.Validation\Auction.Common.Presentation.Validation.csproj" />
+    <ProjectReference Include="..\..\L3.Infrastructure\Auction.Wallet.Infrastructure.DbInitialization\Auction.Wallet.Infrastructure.DbInitialization.csproj" />
     <ProjectReference Include="..\..\L3.Infrastructure\Auction.Wallet.Infrastructure.Repositories\Auction.Wallet.Infrastructure.Repositories.csproj" />
     <ProjectReference Include="..\..\L3.Presentation\Auction.Wallet.Presentation.GrpcApi\Auction.Wallet.Presentation.GrpcApi.csproj" />
     <ProjectReference Include="..\..\L3.Presentation\Auction.Wallet.Presentation.Validation\Auction.Wallet.Presentation.Validation.csproj" />

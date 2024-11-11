@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Auction.Common.Infrastructure.DbInitialization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Threading.Tasks;
 
-namespace Auction.Common.Presentation.Initialization;
+namespace Auction.Common.Infrastructure.DbInitialization;
 
 public static class MigrationHelper
 {

@@ -5,7 +5,7 @@ using Auction.WalletMicroservice.Domain.Entities;
 using System;
 using System.Threading.Tasks;
 
-namespace Auction.Wallet;
+namespace Auction.Wallet.Infrastructure.DbInitialization;
 
 public static class DbInitializationHelper
 {
