@@ -137,6 +137,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors(policy =>
+{
+	policy
+		//.WithOrigins("http://localhost:3000")
+		.AllowAnyOrigin()
+		.AllowAnyMethod()
+		.AllowAnyHeader();
+});
+
 app.MapHealthChecks("health", new HealthCheckOptions
 {
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
