@@ -1,9 +1,9 @@
 ﻿using Auction.Common.Application.L1.Models;
 using Auction.Common.Application.L2.Interfaces.Commands;
 using Auction.Wallet.Application.L2.Interfaces.Commands.Owners;
-using Auction.Wallet.Application.L2.Interfaces.Commands.Traiding;
+using Auction.Wallet.Application.L2.Interfaces.Commands.Trading;
 using Auction.Wallet.Presentation.WebApi.Contracts.Owner;
-using Auction.Wallet.Presentation.WebApi.Contracts.Traiding;
+using Auction.Wallet.Presentation.WebApi.Contracts.Trading;
 using AutoMapper;
 
 namespace Auction.Wallet.Presentation.WebApi.Mapping;
@@ -24,4 +24,3 @@ public class WebApiMappingProfile : Profile
             .ConstructUsing(x => new GetWalletTransactionsQuery(x.Id));
     }
 }
-

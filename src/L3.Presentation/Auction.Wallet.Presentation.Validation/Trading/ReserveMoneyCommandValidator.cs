@@ -1,8 +1,8 @@
 ﻿using Auction.Common.Application.L1.Models;
-using Auction.Wallet.Application.L2.Interfaces.Commands.Traiding;
+using Auction.Wallet.Application.L2.Interfaces.Commands.Trading;
 using FluentValidation;
 
-namespace Auction.Wallet.Presentation.Validation.Traiding;
+namespace Auction.Wallet.Presentation.Validation.Trading;
 
 public class ReserveMoneyCommandValidator : AbstractValidator<ReserveMoneyCommand>
 {

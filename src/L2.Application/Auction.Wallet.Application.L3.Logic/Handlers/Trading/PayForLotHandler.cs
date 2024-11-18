@@ -2,7 +2,7 @@
 using Auction.Common.Application.L2.Interfaces.Handlers;
 using Auction.Common.Application.L2.Interfaces.Strings;
 using Auction.Common.Domain.ValueObjects.Numeric;
-using Auction.Wallet.Application.L2.Interfaces.Commands.Traiding;
+using Auction.Wallet.Application.L2.Interfaces.Commands.Trading;
 using Auction.Wallet.Application.L2.Interfaces.Repositories;
 using Auction.Wallet.Application.L3.Logic.Strings;
 using System;
@@ -11,14 +11,14 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Auction.Wallet.Application.L3.Logic.Handlers.Traiding;
+namespace Auction.Wallet.Application.L3.Logic.Handlers.Trading;
 
-public class RealeaseMoneyHandler(
+public class PayForLotHandler(
     IOwnersRepository ownersRepository,
     ILotsRepository lotsRepository,
     ITransfersRepository transfersRepository,
     IFreezingsRepository freezingsRepository)
-        : ICommandHandler<RealeaseMoneyCommand>,
+        : ICommandHandler<PayForLotCommand>,
         IDisposable
 {
     private readonly IOwnersRepository _ownersRepository = ownersRepository ?? throw new ArgumentNullException(nameof(ownersRepository));
@@ -43,16 +43,31 @@ public class RealeaseMoneyHandler(
         GC.SuppressFinalize(this);
     }
 
-    public async Task<IAnswer> HandleAsync(RealeaseMoneyCommand command, CancellationToken cancellationToken = default)
+    public async Task<IAnswer> HandleAsync(PayForLotCommand command, CancellationToken cancellationToken = default)
     {
         var buyer = await _ownersRepository.GetByIdAsync(
-                        command.BuyerId,
-                        includeProperties: "Bill._freezings",
-                        cancellationToken: cancellationToken);
+                                command.BuyerId,
+                                includeProperties: "Bill._transfersFrom",
+                                cancellationToken: cancellationToken);
+
+        if (command.SellerId == command.BuyerId)
+        {
+            return BadAnswer.Error(WalletMessages.BuyerAndSellerIdsCannotMatch, command.SellerId);
+        }
 
         if (buyer is null)
         {
             return BadAnswer.EntityNotFound(CommonMessages.DoesntExistWithId, CommonNames.Buyer, command.BuyerId);
+        }
+
+        var seller = await _ownersRepository.GetByIdAsync(
+                                command.SellerId,
+                                includeProperties: "Bill",
+                                cancellationToken: cancellationToken);
+
+        if (seller is null)
+        {
+            return BadAnswer.EntityNotFound(CommonMessages.DoesntExistWithId, CommonNames.Seller, command.SellerId);
         }
 
         var lot = await _lotsRepository.GetByIdAsync(command.LotId, cancellationToken: cancellationToken);
@@ -61,22 +76,28 @@ public class RealeaseMoneyHandler(
             return BadAnswer.EntityNotFound(CommonMessages.DoesntExistWithId, CommonNames.Lot, command.LotId);
         }
 
-        var price = new Price(command.Price);
-        var initialFreezings = buyer.Bill.Freezings;
+        var price = new Price(command.HammerPrice);
 
-        if (!buyer.RealeaseMoney(price, lot))
+        if (!buyer.HasFrozenMoney(price))
         {
-            return BadAnswer.Error(WalletMessages.ThereIsNotEnoughReservedMoneyInBill);
+            return BadAnswer.Error(WalletMessages.NotEnoughMoneyReserved);
         }
 
-        var resultFreezings = buyer.Bill.Freezings;
+        var initialTransfers = buyer.Bill.TransfersFrom;
+
+        if (!buyer.PayForLot(price, seller, lot))
+        {
+            return BadAnswer.Error(WalletMessages.FailedToPayForLot);
+        }
+
+        var resultTransfers = buyer.Bill.TransfersFrom;
         var tasks = new List<Task>();
 
-        foreach (var freezing in resultFreezings)
+        foreach (var transfer in resultTransfers)
         {
-            if (!initialFreezings.Contains(freezing))
+            if (!initialTransfers.Contains(transfer))
             {
-                var task = _freezingsRepository.AddAsync(freezing, cancellationToken);
+                var task = _transfersRepository.AddAsync(transfer, cancellationToken);
                 tasks.Add(task);
             }
         }
@@ -85,6 +106,6 @@ public class RealeaseMoneyHandler(
 
         await _ownersRepository.SaveChangesAsync(cancellationToken);
 
-        return new OkAnswer(WalletMessages.MoneySuccessfullyUnfrozen);
+        return new OkAnswer(WalletMessages.PaymentForLotWasSuccessful);
     }
 }

@@ -1,8 +1,8 @@
 ﻿using Auction.Common.Application.L2.Interfaces.Answers;
 using Auction.Common.Application.L2.Interfaces.Handlers;
 using Auction.Common.Presentation.Controllers;
-using Auction.Wallet.Application.L2.Interfaces.Commands.Traiding;
-using Auction.Wallet.Presentation.WebApi.Contracts.Traiding;
+using Auction.Wallet.Application.L2.Interfaces.Commands.Trading;
+using Auction.Wallet.Presentation.WebApi.Contracts.Trading;
 using AutoMapper;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
@@ -15,7 +15,7 @@ namespace Auction.Wallet.Presentation.WebApi.Controllers;
 
 [Route("/api/v1/[controller]/[action]")]
 [ApiController]
-public class TraidingController(
+public class TradingController(
     IMapper mapper)
         : ControllerBase
 {

@@ -3,7 +3,7 @@ using Auction.Common.Application.L2.Interfaces.Handlers;
 using Auction.Common.Application.L2.Interfaces.Strings;
 using Auction.Common.Domain.ValueObjects.Numeric;
 using Auction.Common.Domain.ValueObjects.String;
-using Auction.Wallet.Application.L2.Interfaces.Commands.Traiding;
+using Auction.Wallet.Application.L2.Interfaces.Commands.Trading;
 using Auction.Wallet.Application.L2.Interfaces.Repositories;
 using Auction.Wallet.Application.L3.Logic.Strings;
 using Auction.WalletMicroservice.Domain.Entities;
@@ -13,7 +13,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Auction.Wallet.Application.L3.Logic.Handlers.Traiding;
+namespace Auction.Wallet.Application.L3.Logic.Handlers.Trading;
 
 public class ReserveMoneyHandler(
     IOwnersRepository ownersRepository,

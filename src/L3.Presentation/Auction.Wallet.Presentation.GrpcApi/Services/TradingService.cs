@@ -4,18 +4,18 @@ using Auction.Common.Application.L2.Interfaces.Handlers;
 using Auction.Common.Application.L2.Interfaces.Strings;
 using Auction.Common.Domain.ValueObjects.Numeric;
 using Auction.Common.Domain.ValueObjects.String;
-using Auction.Wallet.Application.L2.Interfaces.Commands.Traiding;
+using Auction.Wallet.Application.L2.Interfaces.Commands.Trading;
 using Grpc.Core;
 using System;
 using System.Threading.Tasks;
 
 namespace Auction.Wallet.Presentation.GrpcApi.Services;
 
-public class TraidingService(
+public class TradingService(
     ICommandHandler<PayForLotCommand> payHandler,
     ICommandHandler<RealeaseMoneyCommand> realeaseHandler,
     ICommandHandler<ReserveMoneyCommand> reserveHandler)
-        : Traiding.TraidingBase
+        : Trading.TradingBase
 {
     public override async Task<BaseResponseGrpc> PayForLot(PayForLotCommandGrpc request, ServerCallContext context)
     {

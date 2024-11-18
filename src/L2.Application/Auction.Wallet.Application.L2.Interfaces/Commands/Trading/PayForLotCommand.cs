@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Auction.Wallet.Application.L2.Interfaces.Commands.Traiding;
+namespace Auction.Wallet.Application.L2.Interfaces.Commands.Trading;
 
 public record PayForLotCommand(
     Guid BuyerId,

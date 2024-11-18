@@ -5,18 +5,18 @@ using Auction.Common.Presentation.Mapping;
 using Auction.Common.Presentation.Validation;
 using Auction.Wallet.Application.L1.Models.Owners;
 using Auction.Wallet.Application.L2.Interfaces.Commands.Owners;
-using Auction.Wallet.Application.L2.Interfaces.Commands.Traiding;
+using Auction.Wallet.Application.L2.Interfaces.Commands.Trading;
 using Auction.Wallet.Application.L2.Interfaces.Repositories;
 using Auction.Wallet.Application.L3.Logic.Handlers.Owners;
 using Auction.Wallet.Application.L3.Logic.Handlers.Persons;
-using Auction.Wallet.Application.L3.Logic.Handlers.Traiding;
+using Auction.Wallet.Application.L3.Logic.Handlers.Trading;
 using Auction.Wallet.Application.L3.Logic.Mapping;
 using Auction.Wallet.Infrastructure.DbInitialization;
 using Auction.Wallet.Infrastructure.EntityFramework;
 using Auction.Wallet.Infrastructure.Repositories.EntityFramework;
 using Auction.Wallet.Presentation.GrpcApi.Services;
 using Auction.Wallet.Presentation.MassTransit.Persons;
-using Auction.Wallet.Presentation.Validation.Traiding;
+using Auction.Wallet.Presentation.Validation.Trading;
 using Auction.Wallet.Presentation.WebApi.Mapping;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -127,7 +127,7 @@ builder.Services.AddMassTransit(x =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline
-app.MapGrpcService<TraidingService>();
+app.MapGrpcService<TradingService>();
 app.MapGet("/", () => "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
 
 // Configure the HTTP request pipeline.
@@ -139,11 +139,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors(policy =>
 {
-	policy
-		//.WithOrigins("http://localhost:3000")
-		.AllowAnyOrigin()
-		.AllowAnyMethod()
-		.AllowAnyHeader();
+    policy
+        //.WithOrigins("http://localhost:3000")
+        .AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader();
 });
 
 app.MapHealthChecks("health", new HealthCheckOptions
