@@ -142,6 +142,10 @@ public class GetWalletTransactionsHandler(
                 t.Balance = new BalanceModel(allMoney, frozenMoney, freeMoney);
             });
 
+        transactions = transactions
+            .OrderByDescending(t => t.DateTime)
+            .ToList();
+
         var page = new PageOf<TransactionModel>(
                             ItemsCount: transactions.Count,
                             PageItemsCount: transactions.Count,
