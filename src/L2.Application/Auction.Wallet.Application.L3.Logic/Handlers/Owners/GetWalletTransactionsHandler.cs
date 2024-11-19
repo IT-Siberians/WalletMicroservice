@@ -55,7 +55,7 @@ public class GetWalletTransactionsHandler(
         var freezings = (await _freezingsRepository
             .GetAsync(
                 includeProperties: "Bill.Owner, Lot",
-                filter: e => e.Bill.Owner.Id == query.OwnerId,
+                filters: [e => e.Bill.Owner.Id == query.OwnerId],
                 orderKeySelector: e => e.DateTime,
                 cancellationToken: cancellationToken))
             .Items
@@ -79,8 +79,11 @@ public class GetWalletTransactionsHandler(
         var transfers = (await _transfersRepository
             .GetAsync(
                 includeProperties: "FromBill.Owner, ToBill.Owner, Lot",
-                filter: e => e.FromBill != null && e.FromBill.Owner.Id == query.OwnerId
-                            || e.ToBill != null && e.ToBill.Owner.Id == query.OwnerId,
+                filters:
+                [
+                    e => e.FromBill != null && e.FromBill.Owner.Id == query.OwnerId
+                            || e.ToBill != null && e.ToBill.Owner.Id == query.OwnerId
+                ],
                 orderKeySelector: e => e.DateTime,
                 cancellationToken: cancellationToken))
             .Items

@@ -29,7 +29,7 @@ public class GetPageHandler<TQuery, TEntity, TModel, TEntityRepository, TOrderKe
 
     private bool _isDisposed;
 
-    protected Expression<Func<TEntity, bool>>? Filter;
+    protected Expression<Func<TEntity, bool>>[]? Filters;
     protected TQuery? Query;
 
     public void Dispose()
@@ -49,7 +49,7 @@ public class GetPageHandler<TQuery, TEntity, TModel, TEntityRepository, TOrderKe
         Query = query ?? throw new ArgumentNullException(nameof(query));
 
         var entitiesPage = await _repository.GetAsync(
-                                    Filter,
+                                    Filters,
                                     orderKeySelector,
                                     page: query.Page,
                                     includeProperties,

@@ -37,7 +37,7 @@ public class BaseEfRepository<TDbContext, TEntity, TKey>(TDbContext dbContext)
     /// <summary>
     /// Возвращает сущности удовлетворяющие фильтру
     /// </summary>
-    /// <param name="filter">Фильтр</param>
+    /// <param name="filters">Фильтры</param>
     /// <param name="orderKeySelector">Выбор ключа сортировки</param>
     /// <param name="pageQuery">Параметры возвращаемой страницы данных</param>
     /// <param name="includeProperties">Загружаемые свойства</param>
@@ -45,7 +45,7 @@ public class BaseEfRepository<TDbContext, TEntity, TKey>(TDbContext dbContext)
     /// <param name="cancellationToken">Токен отмены</param>
     /// <returns>Страница сущностей</returns>
     public virtual async Task<IPageOf<TEntity>> GetAsync<TOrderKey>(
-        Expression<Func<TEntity, bool>>? filter = null,
+        Expression<Func<TEntity, bool>>[]? filters = null,
         Expression<Func<TEntity, TOrderKey>>? orderKeySelector = null,
         PageQuery? pageQuery = null,
         string? includeProperties = null,
@@ -56,9 +56,12 @@ public class BaseEfRepository<TDbContext, TEntity, TKey>(TDbContext dbContext)
             ? DbSet
             : DbSet.AsNoTracking();
 
-        if (filter is not null)
+        if (filters is not null)
         {
-            query = query.Where(filter);
+            foreach (var filter in filters)
+            {
+                query = query.Where(filter);
+            }
         }
 
         if (includeProperties is not null)

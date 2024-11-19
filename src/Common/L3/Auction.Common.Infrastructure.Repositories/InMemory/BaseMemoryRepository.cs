@@ -32,12 +32,12 @@ public class BaseMemoryRepository<TEntity, TKey>(IList<TEntity> entities)
     /// <summary>
     /// Возвращает сущности удовлетворяющие фильтру
     /// </summary>
-    /// <param name="filter">Фильтр</param>
+    /// <param name="filters">Фильтры</param>
     /// <param name="orderKeySelector">Выбор ключа сортировки</param>
     /// <param name="pageQuery">Параметры возвращаемой страницы данных</param>
     /// <returns>Перечисление сущностей</returns>
     public virtual Task<IPageOf<TEntity>> GetAsync<TOrderKey>(
-        Expression<Func<TEntity, bool>>? filter = null,
+        Expression<Func<TEntity, bool>>[]? filters = null,
         Expression<Func<TEntity, TOrderKey>>? orderKeySelector = null,
         PageQuery? pageQuery = null,
         string? includeProperties = null,
@@ -46,11 +46,14 @@ public class BaseMemoryRepository<TEntity, TKey>(IList<TEntity> entities)
     {
         var entities = Entities;
 
-        if (filter is not null)
+        if (filters is not null)
         {
-            entities = entities
-                .Where(filter.Compile())
-                .ToList();
+            foreach (var filter in filters)
+            {
+                entities = entities
+                    .Where(filter.Compile())
+                    .ToList();
+            }
         }
 
         if (orderKeySelector is not null)

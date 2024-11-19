@@ -20,7 +20,7 @@ public interface IGetableRepository<TEntity, TKey>
     /// <summary>
     /// Возвращает сущности удовлетворяющие фильтру
     /// </summary>
-    /// <param name="filter">Фильтр</param>
+    /// <param name="filters">Фильтры</param>
     /// <param name="orderKeySelector">Выбор ключа сортировки</param>
     /// <param name="page">Параметры возвращаемой страницы данных</param>
     /// <param name="includeProperties">Загружаемые свойства</param>
@@ -28,7 +28,7 @@ public interface IGetableRepository<TEntity, TKey>
     /// <param name="cancellationToken">Токен отмены</param>
     /// <returns>Страницу сущностей</returns>
     Task<IPageOf<TEntity>> GetAsync<TOrderKey>(
-        Expression<Func<TEntity, bool>>? filter = null,
+        Expression<Func<TEntity, bool>>[]? filters = null,
         Expression<Func<TEntity, TOrderKey>>? orderKeySelector = null,
         PageQuery? page = null,
         string? includeProperties = null,
